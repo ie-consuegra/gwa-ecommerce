@@ -1,3 +1,27 @@
-/*
-Test css bundling
-*/
+div.cart-counter {
+  line-height: 2px;
+}
+
+div.cart-counter button {
+  height: 24px;
+  line-height: 2px;
+}
+
+div.cart-counter button:focus {
+  box-shadow: none;
+}
+
+div.cart-counter input {
+  border-width: 2px;
+  text-align: center;
+  height: 24px;
+  width: 52px;
+}
+
+div.cart-counter input:focus {
+  box-shadow: none;
+}
+
+h6 small {
+  font-size: 75%;
+}

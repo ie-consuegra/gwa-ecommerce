@@ -1,7 +1,6 @@
 printf "\n"
 echo "*  Removing old files..."
 rm dist/backend.js
-rm dist/frontend.html
 rm src/client/bundles/bundle.js
 rm src/client/bundles/bundle.css
 echo "✔️  Done, file can be found as backend.js in dist directory"

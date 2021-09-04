@@ -28,8 +28,16 @@
                 <p class="card-subtitle mb-3 text-muted" x-text="isAvailable(item.stock)"></p>
                 <p class="card-text" x-text="item.name"></p>
               </div>
-              <div class="card-footer d-flex justify-content-end">
+              <div class="card-footer">
+                <h6 class="text-center mb-1"><small>AÑADIR AL CARRITO</small></h6>
+                <div class="d-flex justify-content-center cart-counter">
+                  <div class="btn-minus"><button class="btn btn-outline-secondary btn-sm"><i class="bi bi-dash"></i></button></div>
+                  <input value="0" class="form-control" />
+                  <div class="btn-plus"><button class="btn btn-outline-secondary btn-sm"><i class="bi bi-plus"></i></button></i></div>
+                </div>
+                <!--
                 <a x-bind:href="whatsappUrlGen(item.name)" target="_blank" class="btn btn-success btn-small" aria-label="WhatsApp"><i class="bi-whatsapp" style="color: #FFF;"></i></a>
+                -->
               </div>
             </div>
           </div>
