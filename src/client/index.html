@@ -29,11 +29,13 @@
                 <p class="card-text" x-text="item.name"></p>
               </div>
               <div class="card-footer">
-                <h6 class="text-center mb-1"><small>AÑADIR AL CARRITO</small></h6>
-                <div class="d-flex justify-content-center cart-counter">
-                  <div class="btn-minus"><button class="btn btn-outline-secondary btn-sm"><i class="bi bi-dash"></i></button></div>
-                  <input value="0" class="form-control" />
-                  <div class="btn-plus"><button class="btn btn-outline-secondary btn-sm"><i class="bi bi-plus"></i></button></i></div>
+                <div class="footer-element" x-show="!isInCart(item.inCart)">
+                  <button type="button" class="btn btn-primary btn-sm" @click="item.inCart++"><i class="bi bi-cart-plus me-2"></i>Agregar</button>
+                </div>
+                <div class="footer-element cart-counter" x-show="isInCart(item.inCart)">
+                  <div class="btn-minus"><button class="btn btn-outline-secondary btn-sm" @click="item.inCart--"><i class="bi bi-dash"></i></button></div>
+                  <input x-model="item.inCart" class="form-control" />
+                  <div class="btn-plus"><button class="btn btn-outline-secondary btn-sm"  @click="item.inCart++"><i class="bi bi-plus"></i></button></i></div>
                 </div>
               </div>
             </div>

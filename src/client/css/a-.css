@@ -3,7 +3,7 @@ div.cart-counter {
 }
 
 div.cart-counter button {
-  height: 24px;
+  height: 31px;
   line-height: 2px;
 }
 
@@ -14,7 +14,7 @@ div.cart-counter button:focus {
 div.cart-counter input {
   border-width: 2px;
   text-align: center;
-  height: 24px;
+  height: 31px;
   width: 52px;
 }
 
@@ -24,4 +24,9 @@ div.cart-counter input:focus {
 
 h6 small {
   font-size: 75%;
+}
+
+div.footer-element {
+  display: flex;
+  justify-content: center;
 }
