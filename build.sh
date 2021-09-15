@@ -3,7 +3,6 @@ echo "*  Removing old bundle files..."
 rm src/server/bundle/bundle.js
 rm src/client/bundles/bundle.js
 rm src/client/bundles/bundle.css
-rm src/client/bundles/bundle.html
 echo "✔️  Done"
 printf "\n"
 echo "*  Bundling backend JavaScript..."

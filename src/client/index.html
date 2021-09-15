@@ -18,17 +18,17 @@
 
   <div class="global-wrapper" x-data="fetchData()">
     <div class="container" >
-      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2 mt-1">
         <template x-for="item in data">
           <div class="col">
-            <div class="card h-100">
-              <img class="card-img-top" x-bind:alt="item.name" style="height: 284px; object-fit: contain;" x-bind:src="item.picture">
-              <div class="card-body">
+            <div class="card h-100 shadow">
+              <img class="card-img-top" x-bind:alt="item.name" x-bind:src="item.picture">
+              <div class="card-body pb-1">
                 <p class="card-text" x-text="item.name"></p>
                 <h5 class="card-title" x-text="formatCurrency(item.price)"></h5>
-                <p class="card-subtitle mb-3 text-muted" x-text="isAvailable(item.stock)"></p>
+                <p class="card-subtitle mb-1 text-muted" x-text="isAvailable(item.stock)"></p>
               </div>
-              <div class="card-footer">
+              <div class="card-footer bg-white pb-3">
                 <div class="footer-element" x-show="!isInCart(item.inCart)">
                   <button type="button" class="btn btn-primary btn-sm" @click="item.inCart++"><i class="bi bi-cart-plus me-2"></i>Agregar</button>
                 </div>
