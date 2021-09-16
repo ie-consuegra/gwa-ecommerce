@@ -58,6 +58,25 @@ function fetchData() {
       return `${whatsappApiURl}${phoneParam}${textParam}`;
     },
     isAvailable: (stock) => (stock === 0 ? 'Agotado' : `${stock.toString()} disponibles`),
-    isInCart: (itemsInCart) => itemsInCart > 0,
+    isInCart: (itemsInCart) => Number(itemsInCart) > 0,
+    addToCart: (item) => {
+      item.inCart = Number(item.inCart);
+      item.stock = Number(item.stock);
+      if (item.inCart < item.stock && item.stock > 0) {
+        item.inCart += 1;
+      }
+    },
+    substractToCart: (item) => {
+      item.inCart = Number(item.inCart);
+      if (item.inCart > 0) {
+        item.inCart -= 1;
+      }
+    },
+    isActive: (item) => (item.stock > 0 ? '' : 'disabled'),
+    isValidCartValue: (item) => {
+      if (item.inCart > Number(item.stock)) {
+        item.inCart = Number(item.stock);
+      }
+    },
   };
 }

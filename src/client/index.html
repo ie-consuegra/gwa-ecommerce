@@ -30,12 +30,12 @@
               </div>
               <div class="card-footer bg-white pb-3">
                 <div class="footer-element" x-show="!isInCart(item.inCart)">
-                  <button type="button" class="btn btn-primary btn-sm" @click="item.inCart++"><i class="bi bi-cart-plus me-2"></i>Agregar</button>
+                  <button type="button" class="btn btn-primary btn-sm" @click="addToCart(item)" x-bind:class="isActive(item)"><i class="bi bi-cart-plus me-2"></i>Agregar</button>
                 </div>
                 <div class="footer-element cart-counter" x-show="isInCart(item.inCart)">
-                  <div class="btn-minus"><button class="btn btn-outline-secondary btn-sm" @click="item.inCart--"><i class="bi bi-dash"></i></button></div>
-                  <input x-model="item.inCart" class="form-control" />
-                  <div class="btn-plus"><button class="btn btn-outline-secondary btn-sm"  @click="item.inCart++"><i class="bi bi-plus"></i></button></i></div>
+                  <div class="btn-minus"><button class="btn btn-outline-secondary btn-sm" @click="substractToCart(item)"><i class="bi bi-dash"></i></button></div>
+                  <input type="number" min="0" x-model="item.inCart" x-bind:max="item.stock" @keyup="isValidCartValue(item)" class="form-control" />
+                  <div class="btn-plus"><button class="btn btn-outline-secondary btn-sm"  @click="addToCart(item)"><i class="bi bi-plus"></i></button></i></div>
                 </div>
               </div>
             </div>
