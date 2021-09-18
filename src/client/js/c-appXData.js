@@ -26,5 +26,6 @@ function appXData() {
     substractToCart,
     checkCartValueInput,
     updateTotalItems,
+    removeFromCart,
   };
 }

@@ -55,3 +55,13 @@ function updateTotalItems(item) {
   const itemsNow = item.inCart - this.itemsBefore;
   this.totalItemsInCart += itemsNow;
 }
+
+/** Remove one item from the cart.
+ * Substract the number of items from the total
+ * and set inCart value to zero
+ * @param {Object} item Store item object
+ */
+function removeFromCart(item) {
+  this.totalItemsInCart -= item.inCart;
+  item.inCart = 0;
+}

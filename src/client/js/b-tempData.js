@@ -39,6 +39,6 @@ const data = [
     price: 239900,
     stock: 5,
     picture: 'https://http2.mlstatic.com/D_NQ_NP_701040-MLA45269592618_032021-V.webp',
-    inCart: 1,
+    inCart: 0,
   },
 ];
