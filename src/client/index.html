@@ -18,20 +18,21 @@
 
   <div class="global-wrapper" x-data="appXData()">
       <ul class="nav justify-content-end sticky-top bg-light shadow-sm">
-        <li class="nav-item" x-show="shopVisible" @click.prevent="shopVisible = !shopVisible">
+        <li class="nav-item" x-show="storeVisible" @click.prevent="storeVisible = !storeVisible">
           <a href="#" class="nav-link fs-5">
             <i class="bi bi-cart"></i>
             <span class="badge rounded-pill bg-danger" x-text="totalItemsInCart" x-show="totalItemsInCart > 0" x-transition></span>
           </a>
         </li>
-        <li class="nav-item" x-show="!shopVisible" @click.prevent="shopVisible = !shopVisible">
+        <li class="nav-item" x-show="!storeVisible" @click.prevent="storeVisible = !storeVisible">
           <a href="#" class="nav-link fs-5">
             <i class="bi bi-arrow-left-short"></i>
             <i class="bi bi-shop"></i>
           </a>
         </li>
       </ul>
-    <div id="shop-view" x-show="shopVisible">
+    <!-- STORE VIEW -->
+    <div id="store-view" x-show="storeVisible">
       <div class="container" >
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2 mt-1">
           <template x-for="item in data">
@@ -59,7 +60,9 @@
         </div>
       </div>
     </div>
-    <div id="cart-view" x-show="!shopVisible">
+
+    <!-- CART VIEW -->
+    <div id="cart-view" x-show="!storeVisible">
       <div class="container">
         <h2>Carrito</h2>
       </div>

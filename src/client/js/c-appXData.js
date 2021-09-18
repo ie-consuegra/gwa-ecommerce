@@ -13,9 +13,9 @@ function appXData() {
     isActive,
 
     // View stuff
-    shopVisible: true,
+    storeVisible: true,
     toggleView() {
-      this.shopVisible = !this.shopVisible;
+      this.storeVisible = !this.storeVisible;
     },
 
     // Cart stuff
