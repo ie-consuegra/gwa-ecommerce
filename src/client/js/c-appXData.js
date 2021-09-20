@@ -1,6 +1,6 @@
-/* appXData uses the functions declared in:
+/* appXData uses the functions/variables declared in:
 * a-utils.js: formatCurrency
-* b-cart.js: isInCart, addToCart, substractToCart
+* b-cart.js
 * b-store.js: isAvailable, isActive
 */
 
@@ -19,13 +19,6 @@ function appXData() {
     },
 
     // Cart stuff
-    totalItemsInCart: 0,
-    itemsBefore: 0,
-    isInCart,
-    addToCart,
-    substractToCart,
-    checkCartValueInput,
-    updateTotalItems,
-    removeFromCart,
+    ...cart,
   };
 }
