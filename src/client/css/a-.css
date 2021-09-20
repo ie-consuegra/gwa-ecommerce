@@ -52,3 +52,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.cart-image {
+  max-height: 96px;
+}

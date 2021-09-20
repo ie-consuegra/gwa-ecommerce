@@ -64,23 +64,23 @@
     <!-- CART VIEW -->
     <div id="cart-view" x-show="!storeVisible">
       <div class="container">
-        <h3 class="text-center">Carrito</h3>
+        <h3 class="text-center mt-3">Carrito</h3>
         <div class="row">
           <div class="col-sm-12 col-md-8">
-            <h4>Su orden</h4>
-            <div class="list-group">
+            <h5>Su orden</h5>
+            <div class="list-group list-group-flush border-top border-bottom">
               <template x-for="item in data">
                 <div class="list-group-item" x-show="item.inCart > 0">
                   <div class="row">
                     <div class="col-3 col-sm-2">
-                      <img x-bind:alt="item.name" x-bind:src="item.picture" class="img-fluid rounded mx-auto  my-auto d-block">
+                      <img x-bind:alt="item.name" x-bind:src="item.picture" class="img-fluid rounded mx-auto my-auto d-block cart-image">
                     </div>
                     <div class="col-9 col-sm-10">
                       <div class="d-flex w-100 justify-content-between">
                         <h6 class="mb-3" x-text="item.name"></h6>
                       </div>
                       <div class="row">
-                        <div class=" col-4 col-sm-5 col-md-4 col-lg-3 col-xl-2">
+                        <div class="col-4 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                           <select class="form-select form-select-sm" x-model="item.inCart" @focus="itemsBefore = item.inCart" @change="updateTotalItems(item)">
                             <template x-for="iterator in item.stock">
                               <option x-bind:value="iterator" x-text="iterator"></option>
@@ -93,19 +93,53 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div class="col-3 col-sm-2 d-flex justify-content-center">
                       <small><a href="#" @click.prevent="removeFromCart(item)">Eliminar</a></small>
                     </div>
                   </div>
                 </div>
               </template>
             </div>
-            <div class="d-flex justify-content-between">
-              <span>Subtotal</span>
-              <span x-text="formatCurrency(subtotal)"></span>
+            <div id="empty-cart-container" x-show="totalItemsInCart === 0">
+              <div class="d-flex flex-column align-items-center py-4">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="203.5px"
+                  height="198.2px" viewBox="0 0 203.5 198.2" style="overflow:visible;enable-background:new 0 0 203.5 198.2;"
+                  xml:space="preserve">
+                <style type="text/css">
+                  .st0{fill:none;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                  .st1{fill:#FFFFFF;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                  .st2{fill:#666666;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                  .st3{fill:none;stroke:#999999;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                </style>
+                <defs>
+                </defs>
+                <polygon class="st0" points="54.31,163.87 165.32,163.87 187.31,67.59 33,67.59 "/>
+                <path class="st1" d="M2.5,38.22c0.82,0,21.62,0,21.62,0L33,67.59"/>
+                <circle class="st0" cx="62.47" cy="181.01" r="14.69"/>
+                <circle class="st0" cx="156.31" cy="181.01" r="14.69"/>
+                <ellipse class="st2" cx="90.53" cy="109.61" rx="2.76" ry="2.86"/>
+                <ellipse class="st2" cx="129.47" cy="109.61" rx="2.76" ry="2.86"/>
+                <path class="st1" d="M100.82,132.05c4.08-8.16,20.4-12.24,24.48-3.26"/>
+                <path class="st1" d="M129.38,98.6c0.22,0.07,11.42,8.16,11.42,8.16"/>
+                <path class="st1" d="M90.21,98.6c-0.22,0.07-11.42,8.16-11.42,8.16"/>
+                <circle class="st3" cx="79.61" cy="33.32" r="10.61"/>
+                <circle class="st3" cx="194.66" cy="135.32" r="7.34"/>
+                <circle class="st3" cx="13.92" cy="109.61" r="6.94"/>
+                <path class="st3" d="M107.35,56.83c14.69,8.31,44.62-17.97,30.19-27.59c-7.34-4.9-14.69,2.45-12.24,8.98
+                  c2.82,7.52,17.54,10.15,31.01-1.63c13.06-11.42,13.06-27.12,13.06-35.09"/>
+                </svg>
+                <h5 class="my-3 text-center">El carrito luce un poco vacío, añade algo para hacerlo feliz</h5>
+                <button @click.prevent="storeVisible = !storeVisible" class="btn btn-primary">Volver a la tienda</button>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between px-3 my-3">
+              <span class="fw-bold" x-show="totalItemsInCart > 0">Subtotal</span>
+              <span class="fw-bold" x-text="formatCurrency(subtotal)"></span>
             </div>
           </div>
           <div class="col-sm-12 col-md-4">
-            <h4>Su información</h4>
+            <h5>Su información</h5>
             <form>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="delivery-pickup" id="delivery" value="delivery" checked>
