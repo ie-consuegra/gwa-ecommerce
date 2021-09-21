@@ -65,9 +65,41 @@
     <div id="cart-view" x-show="!storeVisible">
       <div class="container">
         <h3 class="text-center mt-3">Carrito</h3>
-        <div class="row">
-          <div class="col-sm-12 col-md-8">
-            <h5>Su orden</h5>
+        <div class="row gx-3">
+          <div  class="col-12" id="empty-cart-container" x-show="totalItemsInCart === 0">
+            <div class="d-flex flex-column align-items-center py-4">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="203.5px"
+                height="198.2px" viewBox="0 0 203.5 198.2" style="overflow:visible;enable-background:new 0 0 203.5 198.2;"
+                xml:space="preserve">
+              <style type="text/css">
+                .st0{fill:none;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                .st1{fill:#FFFFFF;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                .st2{fill:#666666;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+                .st3{fill:none;stroke:#999999;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+              </style>
+              <defs>
+              </defs>
+              <polygon class="st0" points="54.31,163.87 165.32,163.87 187.31,67.59 33,67.59 "/>
+              <path class="st1" d="M2.5,38.22c0.82,0,21.62,0,21.62,0L33,67.59"/>
+              <circle class="st0" cx="62.47" cy="181.01" r="14.69"/>
+              <circle class="st0" cx="156.31" cy="181.01" r="14.69"/>
+              <ellipse class="st2" cx="90.53" cy="109.61" rx="2.76" ry="2.86"/>
+              <ellipse class="st2" cx="129.47" cy="109.61" rx="2.76" ry="2.86"/>
+              <path class="st1" d="M100.82,132.05c4.08-8.16,20.4-12.24,24.48-3.26"/>
+              <path class="st1" d="M129.38,98.6c0.22,0.07,11.42,8.16,11.42,8.16"/>
+              <path class="st1" d="M90.21,98.6c-0.22,0.07-11.42,8.16-11.42,8.16"/>
+              <circle class="st3" cx="79.61" cy="33.32" r="10.61"/>
+              <circle class="st3" cx="194.66" cy="135.32" r="7.34"/>
+              <circle class="st3" cx="13.92" cy="109.61" r="6.94"/>
+              <path class="st3" d="M107.35,56.83c14.69,8.31,44.62-17.97,30.19-27.59c-7.34-4.9-14.69,2.45-12.24,8.98
+                c2.82,7.52,17.54,10.15,31.01-1.63c13.06-11.42,13.06-27.12,13.06-35.09"/>
+              </svg>
+              <h5 class="my-3 text-center">Añade algo para hacerme feliz</h5>
+              <button @click.prevent="storeVisible = !storeVisible" class="btn btn-primary">Seguir comprando</button>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-8 py-3" id="order-list-container" x-show="totalItemsInCart > 0">
+            <h5>Orden</h5>
             <div class="list-group list-group-flush border-top border-bottom">
               <template x-for="item in data">
                 <div class="list-group-item" x-show="item.inCart > 0">
@@ -101,94 +133,63 @@
                 </div>
               </template>
             </div>
-            <div id="empty-cart-container" x-show="totalItemsInCart === 0">
-              <div class="d-flex flex-column align-items-center py-4">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="203.5px"
-                  height="198.2px" viewBox="0 0 203.5 198.2" style="overflow:visible;enable-background:new 0 0 203.5 198.2;"
-                  xml:space="preserve">
-                <style type="text/css">
-                  .st0{fill:none;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-                  .st1{fill:#FFFFFF;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-                  .st2{fill:#666666;stroke:#999999;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-                  .st3{fill:none;stroke:#999999;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-                </style>
-                <defs>
-                </defs>
-                <polygon class="st0" points="54.31,163.87 165.32,163.87 187.31,67.59 33,67.59 "/>
-                <path class="st1" d="M2.5,38.22c0.82,0,21.62,0,21.62,0L33,67.59"/>
-                <circle class="st0" cx="62.47" cy="181.01" r="14.69"/>
-                <circle class="st0" cx="156.31" cy="181.01" r="14.69"/>
-                <ellipse class="st2" cx="90.53" cy="109.61" rx="2.76" ry="2.86"/>
-                <ellipse class="st2" cx="129.47" cy="109.61" rx="2.76" ry="2.86"/>
-                <path class="st1" d="M100.82,132.05c4.08-8.16,20.4-12.24,24.48-3.26"/>
-                <path class="st1" d="M129.38,98.6c0.22,0.07,11.42,8.16,11.42,8.16"/>
-                <path class="st1" d="M90.21,98.6c-0.22,0.07-11.42,8.16-11.42,8.16"/>
-                <circle class="st3" cx="79.61" cy="33.32" r="10.61"/>
-                <circle class="st3" cx="194.66" cy="135.32" r="7.34"/>
-                <circle class="st3" cx="13.92" cy="109.61" r="6.94"/>
-                <path class="st3" d="M107.35,56.83c14.69,8.31,44.62-17.97,30.19-27.59c-7.34-4.9-14.69,2.45-12.24,8.98
-                  c2.82,7.52,17.54,10.15,31.01-1.63c13.06-11.42,13.06-27.12,13.06-35.09"/>
-                </svg>
-                <h5 class="my-3 text-center">El carrito luce un poco vacío, añade algo para hacerlo feliz</h5>
-                <button @click.prevent="storeVisible = !storeVisible" class="btn btn-primary">Volver a la tienda</button>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between px-3 my-3">
+            <div class="d-flex justify-content-between px-3 mt-3">
               <span class="fw-bold" x-show="totalItemsInCart > 0">Subtotal</span>
               <span class="fw-bold" x-text="formatCurrency(subtotal)"></span>
             </div>
           </div>
-          <div class="col-sm-12 col-md-4">
-            <h5>Su información</h5>
+          <div class="col-sm-12 col-md-4 p-3 border rounded" id="user-info-container" x-show="totalItemsInCart > 0">
+            <h5>Información</h5>
             <form>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="delivery-pickup" id="delivery" value="delivery" checked>
-                <label class="form-check-label" for="delivery">Entregar a domicilio</label>
+              <div class="my-3">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="delivery-pickup" id="delivery" value="delivery" checked>
+                  <label class="form-check-label" for="delivery">Entregar a domicilio</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="delivery-pickup" id="pickup" value="pickup">
+                  <label class="form-check-label" for="pickup">Recoger en sitio</label>
+                </div>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="delivery-pickup" id="pickup" value="pickup">
-                <label class="form-check-label" for="pickup">Recoger en sitio</label>
-              </div>
-              <div>
+              <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
                 <input type="text" name="name" id="name" class="form-control">
               </div>
-              <div>
+              <div class="mb-3">
                 <label for="contact" class="form-label">Contacto</label>
                 <input type="text" name="contact" id="contact" class="form-control">
               </div>
-              <div>
+              <div class="mb-3">
                 <label for="address" class="form-label">Dirección</label>
                 <input type="text" name="address" id="address" class="form-control">
               </div>
-            </form>
-              <div>
+              <div class="mb-3">
                 <label for="landmark-zip" class="form-label">Punto de referencia/Código zip</label>
                 <input type="text" name="landmark-zip" id="landmark-zip" class="form-control">
               </div>
-              <div>
+              <div class="mb-3">
                 <label for="extra-info" class="form-label">Otros detalles/observaciones</label>
                 <textarea name="extra-info" id="extra-info" class="form-control" rows="3"></textarea>
               </div>
-              <div class="form-check">
+              <div class="form-check mb-3">
                 <input type="checkbox" name="remember-me" id="remember-me" class="form-check-input" checked>
                 <label for="remember-me" class="form-check-label">Recuérdame</label>
               </div>
               <div class="clearfix">
-                <span class="float-start">Subtotal</span>
-                <span class="float-end" x-text="formatCurrency(subtotal)"></span>
+                <span class="float-start fw-bold">Subtotal</span>
+                <span class="float-end fw-bold" x-text="formatCurrency(subtotal)"></span>
                 <br>
                 <span class="float-start">Entrega a domicilio</span>
                 <span class="float-end" x-text="formatCurrency(deliveryCost)"></span>
                 <br>
-                <span class="float-start">Total a pagar</span>
-                <span class="float-end" x-text="formatCurrency(totalToPay)"></span>
+                <span class="float-start fw-bold fs-5">Total a pagar</span>
+                <span class="float-end fw-bold fs-5" x-text="formatCurrency(totalToPay)"></span>
+              </div>
+              <div class="d-flex justify-content-center py-3">
+                <small>Todo está listo para enviar la orden por WhatsApp</small>
               </div>
               <div>
-                <small class="muted-text">Su orden se enviará por WhatsApp</small>
-              </div>
-              <div>
-                <button type="submit" class="btn btn-success"><i class="bi bi-whatsapp me-2"></i>Enviar orden</button>
+                <button type="submit" class="btn btn-success w-100"><i class="bi bi-whatsapp me-2"></i>Enviar orden</button>
               </div>
             </form>
           </div>
