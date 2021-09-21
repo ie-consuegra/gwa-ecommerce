@@ -56,3 +56,7 @@ input[type=number] {
 .cart-image {
   max-height: 96px;
 }
+
+#spinner {
+  left: calc(50% - 16px);
+}

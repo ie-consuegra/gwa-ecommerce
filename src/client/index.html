@@ -34,6 +34,11 @@
     <!-- STORE VIEW -->
     <div id="store-view" x-show="storeVisible">
       <div class="container" >
+        <div class="row position-relative mt-5" x-show="data.length === 0" id="spinner-container">
+          <div class="spinner-border text-secondary position-absolute" role="status" id="spinner">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2 mt-1">
           <template x-for="item in data">
             <div class="col">
