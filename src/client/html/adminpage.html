@@ -18,10 +18,90 @@
 <body>
   <div id="global-wrapper" x-data="appXData()">
     <div class="container">
-      <h2>Settings</h2>
+      <h3 class="text-center my-3">Configuración</h3>
+      <form>
+        <div class="accordion" id="settings-accordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#my-business" aria-expanded="false" aria-controls="my-business"><i class="bi bi-shop me-2"></i>Mi negocio</button>
+            </h2>
+            <div id="my-business" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="business-name" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="business-name">
+                      <div id="name-help" class="form-text">El nombre de su negocio se incluirá en la orden que se envía por WhatsApp</div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="business-whatsapp" class="form-label">Número de WhatsApp</label>
+                      <input type="text" class="form-control" id="business-whatsapp">
+                      <div id="whatsapp-help" class="form-text">Escriba el número sin espacios ni el signo +</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#parameters" aria-expanded="false" aria-controls="parameters"><i class="bi bi-gear me-2"></i>Parámetros</button>
+            </h2>
+            <div id="parameters" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Moneda</p>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="currency" class="form-label d-block d-sm-none">Moneda</label>
+                      <input type="text" class="form-control" id="currency" value="$">
+                      <div id="currency-help" class="form-text">Signo que se usará para presentar los precios</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Separador decimal</p>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="decimal-separator" class="form-label d-block d-sm-none">Separador decimal</label>
+                      <select class="form-control" id="decimal-separator">
+                        <option value=",">Coma ","</option>
+                        <option value=".">Punto "."</option>
+                      </select>
+                      <div id="decimal-separator-help" class="form-text">Signo que se usará para separar los números decimales</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Centavos</p>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="cents" class="form-label d-block d-sm-none">Centavos</label>
+                      <select class="form-control" id="decimal-separator">
+                        <option value="true">Usar</option>
+                        <option value="false">No usar</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
     function appXData() {
       return {
