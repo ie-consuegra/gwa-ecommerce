@@ -17,6 +17,7 @@ echo "*  CSS files..."
 ls -1 src/client/css/*.css | sort | while read fn ; do cat "$fn" >> src/client/bundles/bundle.css; done
 echo "✔️  Done, file can be found as bundle.css in src/client/bundles"
 echo "*  HTML, CSS and JS..."
+cp -a src/client/html/. dist/
 npx html-build -c html-build-config.js src/client/index.html src/client/bundles/bundle.html
 echo "✔️  Done, file can be found as bundle.html in src/client/bundles"
 printf "\n"
