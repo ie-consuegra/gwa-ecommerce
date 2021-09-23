@@ -21,6 +21,7 @@
       <h3 class="text-center my-3">Configuración</h3>
       <form>
         <div class="accordion" id="settings-accordion">
+          <!-- MY BUSINESS -->
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#my-business" aria-expanded="false" aria-controls="my-business"><i class="bi bi-shop me-2"></i>Mi negocio</button>
@@ -46,6 +47,67 @@
               </div>
             </div>
           </div>
+          <!-- DELIVERY -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#delivery" aria-expanded="false" aria-controls="delivery"><i class="bi bi-truck me-2"></i>Entrega/Despacho</button>
+            </h2>
+            <div id="delivery" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+              <div class="accordion-body">
+                <div class="row p-2 border rounded">
+                  <div class="col-12 col-md-4">
+                    <div class="form-check">
+                      <label for="pickup" class="form-check-label">Recoger en sitio</label>
+                      <input type="checkbox" name="pickup" id="pickup" class="form-check-input" @change="pickupIsChecked = $event.target.checked">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-8">
+                    <input type="text" name="pickup-details" id="pickup-details" class="form-control" placeholder="Observaciones" x-show="pickupIsChecked" x-transition>
+                  </div>
+                </div>
+                <div class="row p-2 border rounded">
+                  <div class="col-12 col-md-4">
+                    <div class="form-check">
+                      <label for="delivery" class="form-check-label">Entrega a domicilio</label>
+                      <input type="checkbox" name="delivery" id="delivery" class="form-check-input" @change="deliveryIsChecked = $event.target.checked">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4 mb-1">
+                    <input type="text" name="delivery-price" id="delivery-price" class="form-control" placeholder="Precio" x-show="deliveryIsChecked" x-transition>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <input type="text" name="delivery-details" id="delivery-details" class="form-control" placeholder="Observaciones" x-show="deliveryIsChecked" x-transition>
+                  </div>
+                </div>
+                <div class="row p-2 border rounded">
+                  <div class="col-12 col-md-4">
+                    <div class="form-check">
+                      <label for="delivery-other" class="form-check-label">Otro</label>
+                      <input type="checkbox" name="delivery-other" id="delivery-other" class="form-check-input" @change="deliveryOtherIsChecked = $event.target.checked">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4 mb-1">
+                    <input type="text" name="delivery-other-price" id="delivery-other-price" class="form-control" placeholder="Precio" x-show="deliveryOtherIsChecked" x-transition>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <input type="text" name="delivery-other-details" id="delivery-other-details" class="form-control" placeholder="Observaciones" x-show="deliveryOtherIsChecked" x-transition>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- PAYMENT METHODS -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#payment-methods" aria-expanded="false" aria-controls="payment-methods"><i class="bi bi-credit-card me-2"></i>Medios de pago</button>
+            </h2>
+            <div id="payment-methods" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+              <div class="accordion-body">
+
+              </div>
+            </div>
+          </div>
+          <!-- PARAMETERS -->
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#parameters" aria-expanded="false" aria-controls="parameters"><i class="bi bi-gear me-2"></i>Parámetros</button>
@@ -96,15 +158,58 @@
               </div>
             </div>
           </div>
+          <!-- GWA ECOMMERCE CONFIGURATION -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#gwa-ecommerce" aria-expanded="false" aria-controls="gwa-ecommerce"><i class="bi bi-hdd-network me-2"></i>Configuración de GWA eCommerce</button>
+            </h2>
+            <div id="gwa-ecommerce" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Hosting de imágenes</p>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="cents" class="form-label d-block d-sm-none">Hosting de imágenes</label>
+                      <select class="form-control" id="image-hosting">
+                        <option value="imagekit">imagekit.io</option>
+                        <option value="generic">Otro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- CONTRIBUTE -->
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#contribution" aria-expanded="false" aria-controls="contribution"><i class="bi bi-hand-thumbs-up me-2"></i>Contribuye con el proyecto</button>
+            </h2>
+            <div id="contribution" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+              <div class="accordion-body">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Guardar los cambios</button>
+          </div>
         </div>
       </form>
     </div>
   </div>
-
+  <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ieconsuegra" data-description="Support me on Buy me a coffee!" data-message="You can contribute maintaining this project alive!" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
     function appXData() {
       return {
+        pickupIsChecked: false,
+        deliveryIsChecked: false,
+        deliveryOtherIsChecked: false,
       }
     }
   </script>
