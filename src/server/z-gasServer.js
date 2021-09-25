@@ -1,4 +1,5 @@
 function doGet(e) {
+  firstUse();
   let output;
 
   if (App.isSetup) {
