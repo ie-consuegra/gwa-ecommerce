@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <div id="global-wrapper" x-data="appXData()">
+  <div class="py-3" id="global-wrapper" x-data="appXData()">
     <div class="container">
       <h3 class="text-center my-3">Configuración</h3>
       <form>
@@ -201,15 +201,56 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Guardar los cambios</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="help-wrapper">
+        <h3 class="text-center my-3">Acerca de</h3>
+        <div class="accordion" id="about-accordion">
+          <!-- ABOUT -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="about-heading">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#about-content" aria-expanded="false" aria-controls="about-content">
+                <i class="bi bi-info-circle me-3"></i>
+                Acerca de
+              </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="about-content" data-bs-parent="#about-accordion">
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col-12 col-md-4">
+                    <p class="display-6">GWA eCommerce v0.9</p>
+                    <p><strong>The online store that works with tools you already know</strong></p>
+                  </div>
+                  <div class="col-12 col-md-8">
+                    <p>GWA eCommerce is a one-person project developed by Ivan Consuegra. Usage of this web app is totally free. Its development is maintained by donations.</p>
+                    <h5>Some features of this release:</h5>
+                    <ul>
+                      <li>Fetch inventory from a Google Spreadsheet</li>
+                      <li>Ecommerce shopping cart</li>
+                      <li>Send orders via WhatsApp</li>
+                      <li>Remember customer data</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- CONTRIBUTE -->
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#contribution" aria-expanded="false" aria-controls="contribution"><i class="bi bi-hand-thumbs-up me-2"></i>Contribuye con el proyecto</button>
             </h2>
-            <div id="contribution" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+            <div id="contribution" class="accordion-collapse collapse" data-bs-parent="#about-accordion">
               <div class="accordion-body">
-                <p>¡La mejora constante de esta aplicación es gracias al apoyo de personas como tú, muchas gracias!</p>
-                <p>Puedes contribuir difundiendo el mensaje y con tus donaciones:</p>
+                <p>¡Muchas gracias por apoyar la mejora continua de esta aplicación!</p>
+                <p>Algunas formas de contribuir son a través de la difusión del proyecto y con donaciones:</p>
                 <div class="row">
                   <div class="col-12 col-md-3 mb-3">
                     <a href="https://www.buymeacoffee.com/ieconsuegra" target="_blank">Buy me a coffee</a>
@@ -235,12 +276,7 @@
             </div>
           </div>
         </div>
-        <div class="row mt-3">
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Guardar los cambios</button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
   <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="ieconsuegra" data-description="Support me on Buy me a coffee!" data-message="You can contribute maintaining this project alive!" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
