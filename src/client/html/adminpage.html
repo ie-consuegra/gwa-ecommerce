@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <div class="py-3" id="global-wrapper" x-data="appXData()">
+  <div class="py-3" id="global-wrapper" x-data="appXData()" x-init="fetchMeta()">
     <div class="container">
       <h3 class="text-center my-3">Configuración</h3>
       <form>
@@ -198,6 +198,35 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Administrador</p>
+                  </div>
+                  <div class="col-12 col-sm-3">
+                    <div class="mb-3">
+                      <label for="admin-username" class="form-label d-block d-sm-none">Nombre administrador</label>
+                      <input type="text" name="admin-username" id="admin-username" class="form-control" placeholder="Nombre administrador">
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-3">
+                    <div class="mb-3">
+                      <label for="admin-password" class="form-label d-block d-sm-none">Contraseña administrador</label>
+                      <input type="password" name="admin-password" id="admin-password" class="form-control" placeholder="Contraseña administrador">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Código para embeber la aplicación</p>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <p class="form-label d-block d-sm-none">Código para embeber la aplicación</p>
+                      <pre class="bg-light p-2 rounded" x-text ="`&lt;iframe src=&quot;${appUrl}&quot; frameborder=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;&quot;&gt;&lt;/iframe&gt;`">
+                      </pre>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -284,10 +313,12 @@
   <script>
     function appXData() {
       return {
+        settings: {},
         pickupIsChecked: false,
         deliveryIsChecked: false,
         deliveryOtherIsChecked: false,
         paymentMethods: [],
+        appUrl: '',
         addPaymentMethodInputs() {
           this.paymentMethods.push(
             {
@@ -301,6 +332,19 @@
             if (item.name !== paymentMethod.name) {return item}
           });
           this.paymentMethods = filteredPaymentMethods;
+        },
+        fetchMeta() {
+          const self = this;
+          google
+            .script
+            .run
+            .withSuccessHandler(self.load)
+            .fetchAppMeta();
+        },
+        load(meta) {
+          this.appUrl = meta.url;
+          this.settings = meta.appSettings;
+          console.log(this.appUrl);
         },
       }
     }
