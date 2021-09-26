@@ -19,7 +19,7 @@
   <div class="py-3" id="global-wrapper" x-data="appXData()" x-init="fetchMeta()">
     <div class="container">
       <h3 class="text-center my-3">Configuración</h3>
-      <form>
+      <form @submit.prevent="saveSettings(event)">
         <div class="accordion" id="settings-accordion">
           <!-- MY BUSINESS -->
           <div class="accordion-item">
@@ -32,14 +32,14 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="business-name" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="business-name">
+                      <input type="text" class="form-control" name="business-name" id="business-name" required>
                       <div id="name-help" class="form-text">El nombre de su negocio se incluirá en la orden que se envía por WhatsApp</div>
                     </div>
                   </div>
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="business-whatsapp" class="form-label">Número de WhatsApp</label>
-                      <input type="text" class="form-control" id="business-whatsapp">
+                      <input type="text" class="form-control" name="business-whatsapp" id="business-whatsapp" required>
                       <div id="whatsapp-help" class="form-text">Escriba el número sin espacios ni el signo +</div>
                     </div>
                   </div>
@@ -113,7 +113,7 @@
                         <input type="text" :name="`paymentMethodName${index}`" :id="`paymentMethodName${index}`" class="form-control" x-model="paymentMethod.name" placeholder="Medio de pago">
                       </div>
                       <div class="col-12 col-md-7 mb-2">
-                        <textarea name="`paymentMethodDetails${index}`" id="`paymentMethodDetails${index}`" rows="1" x-model="paymentMethod.details" class="form-control" placeholder="Información"></textarea>
+                        <textarea :name="`paymentMethodDetails${index}`" :id="`paymentMethodDetails${index}`" rows="1" x-model="paymentMethod.details" class="form-control" placeholder="Información"></textarea>
                       </div>
                     </div>
                   </template>
@@ -140,7 +140,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="currency" class="form-label d-block d-sm-none">Moneda</label>
-                      <input type="text" class="form-control" id="currency" value="$">
+                      <input type="text" class="form-control" id="currency" name="currency" value="$">
                       <div id="currency-help" class="form-text">Signo que se usará para presentar los precios</div>
                     </div>
                   </div>
@@ -152,7 +152,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="decimal-separator" class="form-label d-block d-sm-none">Separador decimal</label>
-                      <select class="form-control" id="decimal-separator">
+                      <select class="form-control" id="decimal-separator" name="decimal-separator">
                         <option value=",">Coma ","</option>
                         <option value=".">Punto "."</option>
                       </select>
@@ -167,7 +167,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="cents" class="form-label d-block d-sm-none">Centavos</label>
-                      <select class="form-control" id="decimal-separator">
+                      <select class="form-control" id="cents" name="cents">
                         <option value="true">Usar</option>
                         <option value="false">No usar</option>
                       </select>
@@ -191,7 +191,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="cents" class="form-label d-block d-sm-none">Hosting de imágenes</label>
-                      <select class="form-control" id="image-hosting">
+                      <select class="form-control" name="image-hosting" id="image-hosting">
                         <option value="imagekit">imagekit.io</option>
                         <option value="generic">Otro</option>
                       </select>
@@ -205,13 +205,13 @@
                   <div class="col-12 col-sm-3">
                     <div class="mb-3">
                       <label for="admin-username" class="form-label d-block d-sm-none">Nombre administrador</label>
-                      <input type="text" name="admin-username" id="admin-username" class="form-control" placeholder="Nombre administrador">
+                      <input type="text" name="admin-username" id="admin-username" class="form-control" placeholder="Nombre administrador" required>
                     </div>
                   </div>
                   <div class="col-12 col-sm-3">
                     <div class="mb-3">
                       <label for="admin-password" class="form-label d-block d-sm-none">Contraseña administrador</label>
-                      <input type="password" name="admin-password" id="admin-password" class="form-control" placeholder="Contraseña administrador">
+                      <input type="password" name="admin-password" id="admin-password" class="form-control" placeholder="Contraseña administrador" required>
                     </div>
                   </div>
                 </div>
@@ -348,11 +348,18 @@
             .fetchAppMeta();
         },
         load(meta) {
-          console.log(this);
           this.appUrl = meta.url;
           this.settings = meta.appSettings;
           this.spreadsheetId = meta.spreadsheetIds.stock;
         },
+        saveSettings(e) {
+          const form = e.target;
+          google
+            .script
+            .run
+            .withSuccessHandler()
+            .saveSettings(form);
+        }
       }
     }
   </script>

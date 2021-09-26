@@ -60,6 +60,10 @@ function firstUse() {
   }
 }
 
+function saveSettings(settings) {
+  Logger.log(settings);
+}
+
 // Function for development purposes only
 function deleteProperties() {
   PropertiesService.getScriptProperties().deleteAllProperties();
