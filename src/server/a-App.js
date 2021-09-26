@@ -4,7 +4,7 @@ const App = {
   properties: {},
   meta: {},
   url: '',
-  spreadsheetsIds: {},
+  spreadsheetIds: {},
 
   get settings() {
     return this.appSettings;
@@ -43,8 +43,8 @@ const App = {
   },
 
   getSpreadsheetIds() {
-    if (this.properties.spreadsheetsIds) {
-      this.spreadsheetsIds = JSON.parse(this.properties.spreadsheetsIds);
+    if (this.properties.spreadsheetIds) {
+      this.spreadsheetIds = JSON.parse(this.properties.spreadsheetIds);
     }
   },
 
@@ -54,25 +54,26 @@ const App = {
     this.getSpreadsheetIds();
     this.getAppUrl();
 
-    const { appSettings, url } = this;
+    const { appSettings, url, spreadsheetIds } = this;
 
     this.meta = {
       appSettings,
       url,
+      spreadsheetIds,
     };
   },
 
   ss(name) {
     let id = '';
     if (name && typeof name === 'string') {
-      if (!this.spreadsheetsIds[name]) {
+      if (!this.spreadsheetIds[name]) {
         this.ssCreate(name);
       }
     } else {
       throw new Error('Invalid argument');
     }
 
-    id = this.spreadsheetsIds[name];
+    id = this.spreadsheetIds[name];
     return {
       get id() { return id; },
       get url() { return `https://docs.google.com/spreadsheets/d/${id}`; },
@@ -88,8 +89,8 @@ const App = {
   },
 
   ssRegister(ssId, name) {
-    this.spreadsheetsIds[name] = ssId;
-    const ssIds = JSON.stringify(this.spreadsheetsIds);
+    this.spreadsheetIds[name] = ssId;
+    const ssIds = JSON.stringify(this.spreadsheetIds);
     PropertiesService
       .getScriptProperties()
       .setProperty('spreadsheetIds', ssIds);
