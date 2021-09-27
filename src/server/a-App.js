@@ -15,7 +15,7 @@ const App = {
   },
 
   get isSetup() {
-    return Object.keys(this.appSettings).length > 0;
+    return !!this.properties.settings;
   },
 
   fetchProperties() {
@@ -40,6 +40,13 @@ const App = {
     if (this.isSetup) {
       this.settings = JSON.parse(this.properties.settings);
     }
+  },
+
+  setSettings(settings) {
+    const settingsStr = JSON.stringify(settings);
+    PropertiesService
+      .getScriptProperties()
+      .setProperty('settings', settingsStr);
   },
 
   getSpreadsheetIds() {
@@ -75,8 +82,8 @@ const App = {
 
     id = this.spreadsheetIds[name];
     return {
-      get id() { return id; },
-      get url() { return `https://docs.google.com/spreadsheets/d/${id}`; },
+      id,
+      url: `https://docs.google.com/spreadsheets/d/${id}/edit`,
     };
   },
 

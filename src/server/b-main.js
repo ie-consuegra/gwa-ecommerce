@@ -61,7 +61,7 @@ function firstUse() {
 }
 
 function saveSettings(settings) {
-  Logger.log(settings);
+  App.setSettings(settings);
 }
 
 // Function for development purposes only
