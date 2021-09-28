@@ -10,6 +10,7 @@ const cart = {
   hasPickup: false,
   hasDelivery: false,
   hasDeliveryOther: false,
+  deliveryDetails: '',
 
   // METHODS
 
@@ -101,6 +102,7 @@ const cart = {
    * according to it
    */
   applySettings(settings) {
+    this.settings = settings;
     this.hasPickup = !!settings.pickup;
     if (this.hasPickup) {
       document.getElementById('pickup').checked = true;
@@ -116,6 +118,26 @@ const cart = {
     if (this.hasDeliveryOther) {
       document.getElementById('delivery').checked = false;
       document.getElementById('delivery-other').checked = true;
+    }
+
+    this.showDeliveryDetails();
+  },
+
+  showDeliveryDetails() {
+    const optionChosen = document.querySelector('form').elements['delivery-pickup'].value;
+
+    switch (optionChosen) {
+      case 'pickup':
+        this.deliveryDetails = this.settings['pickup-details'];
+        break;
+      case 'delivery':
+        this.deliveryDetails = this.settings['delivery-details'];
+        break;
+      case 'delivery-other':
+        this.deliveryDetails = this.settings['delivery-other-details'];
+        break;
+      default:
+        break;
     }
   },
 };
