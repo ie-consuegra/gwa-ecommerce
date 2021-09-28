@@ -34,13 +34,13 @@
     <!-- STORE VIEW -->
     <div id="store-view" x-show="storeVisible">
       <div class="container" >
-        <div class="row position-relative mt-5" x-show="data.length === 0" id="spinner-container">
+        <div class="row position-relative mt-5" x-show="stock.length === 0" id="spinner-container">
           <div class="spinner-border text-secondary position-absolute" role="status" id="spinner">
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2 mt-1">
-          <template x-for="item in data">
+          <template x-for="item in stock">
             <div class="col">
               <div class="card h-100 shadow">
                 <img class="card-img-top" x-bind:alt="item.name" x-bind:src="item.imgUrl">
@@ -106,7 +106,7 @@
           <div class="col-sm-12 col-md-8 py-3" id="order-list-container" x-show="totalItemsInCart > 0">
             <h5>Orden</h5>
             <div class="list-group list-group-flush border-top border-bottom">
-              <template x-for="item in data">
+              <template x-for="item in stock">
                 <div class="list-group-item" x-show="item.inCart > 0">
                   <div class="row">
                     <div class="col-3 col-sm-2">
@@ -147,13 +147,17 @@
             <h5>Información</h5>
             <form>
               <div class="my-3">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="delivery-pickup" id="delivery" value="delivery" checked>
-                  <label class="form-check-label" for="delivery">Entregar a domicilio</label>
-                </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline" x-show="hasPickup">
                   <input class="form-check-input" type="radio" name="delivery-pickup" id="pickup" value="pickup">
                   <label class="form-check-label" for="pickup">Recoger en sitio</label>
+                </div>
+                <div class="form-check form-check-inline" x-show="hasDelivery">
+                  <input class="form-check-input" type="radio" name="delivery-pickup" id="delivery" value="delivery">
+                  <label class="form-check-label" for="delivery">Entregar a domicilio</label>
+                </div>
+                <div class="form-check form-check-inline" x-show="hasDeliveryOther">
+                  <input class="form-check-input" type="radio" name="delivery-pickup" id="delivery-other" value="delivery-other">
+                  <label class="form-check-label" for="delivery-other">Otra forma de entrega</label>
                 </div>
               </div>
               <div class="mb-3">

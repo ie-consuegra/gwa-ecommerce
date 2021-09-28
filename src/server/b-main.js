@@ -19,7 +19,11 @@ function queryStock() {
 
   const connection = SheetsDB.connect(stockDB.url, types);
 
-  const data = connection.table('db', types).get();
+  const stock = connection.table('db', types).get();
+  const data = {
+    stock,
+    settings: App.meta.appSettings,
+  };
   return JSON.stringify(data, null, ' ');
 }
 

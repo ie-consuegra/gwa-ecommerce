@@ -7,7 +7,7 @@
 function appXData() {
   return {
     // Store stuff
-    data: [],
+    stock: [],
     formatCurrency,
     isAvailable,
     isActive,
@@ -27,10 +27,12 @@ function appXData() {
       google
         .script
         .run
-        .withSuccessHandler((stock) => {
+        .withSuccessHandler((data) => {
+          const dataObj = JSON.parse(data);
           // Add inCart attribute to each stock item
-          const stockData = JSON.parse(stock).map((item) => ({ ...item, inCart: 0 }));
-          self.data = stockData;
+          self.stock = dataObj.stock.map((item) => ({ ...item, inCart: 0 }));
+          self.applySettings(dataObj.settings);
+          console.log(dataObj.settings);
         })
         .queryStock();
     },

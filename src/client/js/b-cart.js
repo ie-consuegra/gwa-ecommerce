@@ -6,6 +6,10 @@ const cart = {
   subtotal: 0,
   deliveryCost: 0,
   totalToPay: 0,
+  settings: {},
+  hasPickup: false,
+  hasDelivery: false,
+  hasDeliveryOther: false,
 
   // METHODS
 
@@ -90,5 +94,28 @@ const cart = {
    */
   updateTotalToPay() {
     this.totalToPay = this.subtotal + this.deliveryCost;
+  },
+
+  /**
+   * Take the settings object and adapt cart
+   * according to it
+   */
+  applySettings(settings) {
+    this.hasPickup = !!settings.pickup;
+    if (this.hasPickup) {
+      document.getElementById('pickup').checked = true;
+    }
+
+    this.hasDelivery = !!settings['delivery-option'];
+    if (this.hasDelivery) {
+      document.getElementById('pickup').checked = false;
+      document.getElementById('delivery').checked = true;
+    }
+
+    this.hasDeliveryOther = !!settings['delivery-other'];
+    if (this.hasDeliveryOther) {
+      document.getElementById('delivery').checked = false;
+      document.getElementById('delivery-other').checked = true;
+    }
   },
 };
