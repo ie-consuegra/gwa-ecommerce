@@ -12,6 +12,8 @@ const cart = {
   hasDeliveryOther: false,
   deliveryDetails: '',
   deliveryChosen: '',
+  paymentMethods: [],
+  paymentMethodDetails: '',
 
   // METHODS
 
@@ -122,6 +124,24 @@ const cart = {
     }
 
     this.showDeliveryDetails();
+
+    // Create the array of payment methods
+    const paymentMethods = [];
+    let paymentMethodsIndex = 0;
+    let attributeName = `paymentMethodName${paymentMethodsIndex}`;
+
+    while (settings[attributeName]) {
+      const attributeDetails = `paymentMethodDetails${paymentMethodsIndex}`;
+      paymentMethods.push({
+        name: settings[attributeName],
+        details: settings[attributeDetails],
+      });
+      paymentMethodsIndex += 1;
+      attributeName = `paymentMethodName${paymentMethodsIndex}`;
+    }
+
+    this.paymentMethods = paymentMethods;
+    document.getElementById('payment-method-details').innerText = paymentMethods[0].details;
   },
 
   showDeliveryDetails() {
@@ -146,5 +166,18 @@ const cart = {
       default:
         break;
     }
+  },
+
+  showPaymentDetails() {
+    const paymentChosen = document.getElementById('payment-method').value;
+
+    let paymentDetails = '';
+    this.paymentMethods.forEach((item) => {
+      if (item.name === paymentChosen) {
+        paymentDetails = item.details;
+      }
+    });
+
+    this.paymentMethodDetails = paymentDetails;
   },
 };
