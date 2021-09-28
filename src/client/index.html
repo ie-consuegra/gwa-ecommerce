@@ -148,7 +148,7 @@
             <form>
               <div class="my-3">
                 <div class="form-check form-check-inline" x-show="hasPickup">
-                  <input class="form-check-input" type="radio" name="delivery-pickup" id="pickup" value="pickup" @click="showDeliveryDetails()">
+                  <input class="form-check-input" type="radio" name="delivery-pickup" id="pickup" value="pickup" @click="showDeliveryDetails(event)">
                   <label class="form-check-label" for="pickup">Recoger en sitio</label>
                 </div>
                 <div class="form-check form-check-inline" x-show="hasDelivery">
@@ -191,7 +191,7 @@
                 <span class="float-start fw-bold">Subtotal</span>
                 <span class="float-end fw-bold" x-text="formatCurrency(subtotal)"></span>
                 <br>
-                <span class="float-start">Entrega a domicilio</span>
+                <span class="float-start" x-text="deliveryChosen"></span>
                 <span class="float-end" x-text="formatCurrency(deliveryCost)"></span>
                 <br>
                 <span class="float-start fw-bold fs-5">Total a pagar</span>

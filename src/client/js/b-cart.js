@@ -11,6 +11,7 @@ const cart = {
   hasDelivery: false,
   hasDeliveryOther: false,
   deliveryDetails: '',
+  deliveryChosen: '',
 
   // METHODS
 
@@ -129,12 +130,18 @@ const cart = {
     switch (optionChosen) {
       case 'pickup':
         this.deliveryDetails = this.settings['pickup-details'];
+        this.deliveryCost = 0;
+        this.deliveryChosen = 'Recoger en sitio';
         break;
       case 'delivery':
         this.deliveryDetails = this.settings['delivery-details'];
+        this.deliveryCost = this.settings['delivery-price'] || 0;
+        this.deliveryChosen = 'Entrega a domicilio';
         break;
       case 'delivery-other':
         this.deliveryDetails = this.settings['delivery-other-details'];
+        this.deliveryCost = this.settings['delivery-other-price'] || 0;
+        this.deliveryChosen = 'Otra forma de entrega';
         break;
       default:
         break;
