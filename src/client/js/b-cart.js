@@ -105,6 +105,11 @@ const cart = {
    * according to it
    */
   applySettings(settings) {
+    // Set parameters in the global variables
+    CURRENCY_SYMBOL = settings.currency;
+    DECIMAL_SEPARATOR = settings['decimal-separator'];
+    USE_CENTS = settings.cents === 'true';
+
     this.settings = settings;
     this.hasPickup = !!settings.pickup;
     if (this.hasPickup) {

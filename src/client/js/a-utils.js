@@ -1,7 +1,7 @@
 // FORMAT CURRENCY
-const CURRENCY_SYMBOL = '$ ';
-const DECIMAL_SEPARATOR = ',';
-const USE_CENTS = false;
+let CURRENCY_SYMBOL = '$ ';
+let DECIMAL_SEPARATOR = ',';
+let USE_CENTS = false;
 
 /**
  * Get a series of digits and add thousands separators
