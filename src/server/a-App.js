@@ -63,6 +63,10 @@ const App = {
 
     const { appSettings, url, spreadsheetIds } = this;
 
+    // Delete authentication data to avoid sending it to client
+    delete appSettings['admin-username'];
+    delete appSettings['admin-password'];
+
     this.meta = {
       appSettings,
       url,
