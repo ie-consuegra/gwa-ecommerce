@@ -185,4 +185,59 @@ const cart = {
 
     this.paymentMethodDetails = paymentDetails;
   },
+
+  /** Return an array of all the items the customer has put in cart:
+   * Any item which inCart value is higher than 0
+   * @returns {Object[]} Array of items put in cart
+   */
+  getItemsInCart() {
+    const cartList = this.stock.filter((item) => item.inCart > 0);
+    return cartList;
+  },
+
+  /** Join WhatsApp API URL, parameters and message text
+   * Message text must be encoded
+   * @param {String} text WhatsApp Message text
+   * @returns {String}
+   */
+  whatsappApiUrlGenerator(text) {
+    const WHATSAPP_API_URL = 'https://api.whatsapp.com/send';
+    const WHATSAPP_PHONE_PARAM = `?phone=${this.settings['business-whatsapp']}`;
+    const WHATSAPP_TEXT_PARAM = `&text=${text}`;
+
+    return `${WHATSAPP_API_URL}${WHATSAPP_PHONE_PARAM}${WHATSAPP_TEXT_PARAM}`;
+  },
+
+  /**  Get an array of product items and
+   * return a formatted string to be used in
+   * the WhatsApp body text
+   * @param {Object[]} cartList Array of items in cart
+   * @returns {String}
+   */
+  formatCartList(cartList) {
+    let cartListRawStr = '';
+
+    cartList.forEach((item) => {
+      const { inCart, name, price } = item;
+      const subtotal = Number(inCart) * Number(price);
+
+      const formattedPrice = formatCurrency(price);
+      const formattedSubtotal = formatCurrency(subtotal);
+
+      const detailsLine = `*${inCart} x ${name}* | Precio ${formattedPrice} | total ${formattedSubtotal}`;
+
+      cartListRawStr = `${cartListRawStr}
+${detailsLine}`;
+    });
+
+    return encodeURI(cartListRawStr);
+  },
+
+  launchWhatsapp(event) {
+    // const cartForm = event.target;
+    const cartList = this.getItemsInCart();
+
+    const formattedCartListStr = this.formatCartList(cartList);
+    console.log(formattedCartListStr);
+  },
 };

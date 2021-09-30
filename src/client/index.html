@@ -145,7 +145,7 @@
           </div>
           <div class="col-sm-12 col-md-4 p-3 border rounded" id="user-info-container" x-show="totalItemsInCart > 0">
             <h5>Información</h5>
-            <form>
+            <form @submit.prevent="launchWhatsapp(event)">
               <div class="my-3">
                 <div class="form-check form-check-inline" x-show="hasPickup">
                   <input class="form-check-input" type="radio" name="delivery-pickup" id="pickup" value="pickup" @click="showDeliveryDetails(event)">
