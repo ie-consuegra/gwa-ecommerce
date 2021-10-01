@@ -5,6 +5,7 @@ const App = {
   meta: {},
   url: '',
   spreadsheetIds: {},
+  auth: {},
 
   get settings() {
     return this.appSettings;
@@ -62,6 +63,13 @@ const App = {
     this.getAppUrl();
 
     const { appSettings, url, spreadsheetIds } = this;
+
+    // Store authentication data
+    this.auth = {
+      adminUsername: appSettings['admin-username'],
+      adminPassword: appSettings['admin-password'],
+      currentToken: generateRandomString(64),
+    };
 
     // Delete authentication data to avoid sending it to client
     delete appSettings['admin-username'];
