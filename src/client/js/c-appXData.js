@@ -32,7 +32,6 @@ function appXData() {
           // Add inCart attribute to each stock item
           self.stock = dataObj.stock.map((item) => ({ ...item, inCart: 0 }));
           self.applySettings(dataObj.settings);
-          console.log(dataObj.settings);
         })
         .queryStock();
     },

@@ -237,21 +237,36 @@ ${detailsLine}`;
     const name = cartFormData.get('name');
     const contactNumber = cartFormData.get('contact');
     const address = cartFormData.get('address');
-    const businessHeader = `*_${this.settings['business-name']} ::: Pedido/Orden Digital_*
+    const landmarkOrZip = cartFormData.get('landmark-zip') || '---';
+    const businessHeader = `*_${this.settings['business-name']} ::: Pedido/Orden Digital_* 
 
 `;
     const detailHeader = `
 
 *Detalle*`;
 
-    const customerDataLine = `*Nombre:* ${name} | *WhatsApp:* ${contactNumber} | *Dirección:* ${address}`;
+    const customerDataLine = `*Nombre:* ${name} | *WhatsApp:* ${contactNumber} | *Dirección:* ${address} (Punto de referencia/Código Zip: ${landmarkOrZip})`;
 
     return `${businessHeader}${customerDataLine}${detailHeader}`;
   },
 
   formatFooterText(cartFormData) {
-    const delivery = cartFormData.get('delivery-pickup');
+    let delivery = '';
+    switch (cartFormData.get('delivery-pickup')) { // TRANSLATE DELIVERY METHOD WORKAROUND
+      case 'pickup':
+        delivery = 'Recoger en sitio';
+        break;
+      case 'delivery':
+        delivery = 'Entregar a domicilio';
+        break;
+      case 'delivery-other':
+        delivery = 'Otra forma de entrega';
+        break;
+      default:
+        break;
+    }
     const paymentMethod = cartFormData.get('payment-method');
+    const extraInfo = cartFormData.get('extra-info') || '---';
 
     const {
       subtotal,
@@ -264,6 +279,8 @@ ${detailsLine}`;
 
 *Entrega/despacho: ${delivery}* | Costo: ${formatCurrency(deliveryCost)}
 `;
+    const extraInfoLine = `*Información adicional:* ${extraInfo}
+`;
 
     const subtotalLine = `
 *SUBTOTAL: ${formatCurrency(subtotal)}*`;
@@ -275,6 +292,7 @@ ${detailsLine}`;
 *Medio de pago: ${paymentMethod}* | ${paymentMethodDetails}`;
 
     const footerRawText = deliveryLine
+      + extraInfoLine
       + subtotalLine
       + totalToPayLine
       + paymentMethodLine;
@@ -293,6 +311,8 @@ ${detailsLine}`;
     const whatsappText = `${headerText}${cartListText}${footerText}`;
     const encodedWhatsappText = encodeURI(whatsappText);
 
-    console.log(this.whatsappApiUrlGenerator(encodedWhatsappText));
+    const waUrl = this.whatsappApiUrlGenerator(encodedWhatsappText);
+
+    window.open(waUrl, '_blank');
   },
 };
