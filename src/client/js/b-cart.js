@@ -230,14 +230,69 @@ const cart = {
 ${detailsLine}`;
     });
 
-    return encodeURI(cartListRawStr);
+    return cartListRawStr;
+  },
+
+  formatHeaderText(cartFormData) {
+    const name = cartFormData.get('name');
+    const contactNumber = cartFormData.get('contact');
+    const address = cartFormData.get('address');
+    const businessHeader = `*_${this.settings['business-name']} ::: Pedido/Orden Digital_*
+
+`;
+    const detailHeader = `
+
+*Detalle*`;
+
+    const customerDataLine = `*Nombre:* ${name} | *WhatsApp:* ${contactNumber} | *Dirección:* ${address}`;
+
+    return `${businessHeader}${customerDataLine}${detailHeader}`;
+  },
+
+  formatFooterText(cartFormData) {
+    const delivery = cartFormData.get('delivery-pickup');
+    const paymentMethod = cartFormData.get('payment-method');
+
+    const {
+      subtotal,
+      deliveryCost,
+      totalToPay,
+      paymentMethodDetails,
+    } = this;
+
+    const deliveryLine = `
+
+*Entrega/despacho: ${delivery}* | Costo: ${formatCurrency(deliveryCost)}
+`;
+
+    const subtotalLine = `
+*SUBTOTAL: ${formatCurrency(subtotal)}*`;
+
+    const totalToPayLine = `
+*TOTAL A PAGAR: ${formatCurrency(totalToPay)}*`;
+
+    const paymentMethodLine = `
+*Medio de pago: ${paymentMethod}* | ${paymentMethodDetails}`;
+
+    const footerRawText = deliveryLine
+      + subtotalLine
+      + totalToPayLine
+      + paymentMethodLine;
+
+    return footerRawText;
   },
 
   launchWhatsapp(event) {
-    // const cartForm = event.target;
+    const cartFormData = new FormData(event.target);
     const cartList = this.getItemsInCart();
 
-    const formattedCartListStr = this.formatCartList(cartList);
-    console.log(formattedCartListStr);
+    const cartListText = this.formatCartList(cartList);
+    const headerText = this.formatHeaderText(cartFormData);
+    const footerText = this.formatFooterText(cartFormData);
+
+    const whatsappText = `${headerText}${cartListText}${footerText}`;
+    const encodedWhatsappText = encodeURI(whatsappText);
+
+    console.log(this.whatsappApiUrlGenerator(encodedWhatsappText));
   },
 };

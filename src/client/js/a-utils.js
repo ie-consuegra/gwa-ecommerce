@@ -90,6 +90,8 @@ function formatCurrency(number) {
     const integerSign = (Number(numberStr) < 0 ? '-' : '');
     const formattedNumber = formatNumber(numberStr, DECIMAL_SEPARATOR, 2, USE_CENTS);
     formattedCurrency = `${CURRENCY_SYMBOL}${integerSign}${formattedNumber}`;
+  } else if (number === 0 || number === '0') {
+    formattedCurrency = `${CURRENCY_SYMBOL}0`;
   }
   return formattedCurrency;
 }

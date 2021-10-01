@@ -200,7 +200,7 @@
               <div class="p-1"><hr></div>
               <div class="mt-2 p-3 rounded bg-light">
                 <label for="payment-method" class="form-label">Medio de pago</label>
-                <select class="form-select" @change="showPaymentDetails()" id="payment-method">
+                <select class="form-select" @change="showPaymentDetails()" id="payment-method" name="payment-method">
                   <template x-for="(item, index) in paymentMethods">
                     <option :value="item.name" x-text="item.name"></option>
                   </template>
