@@ -5,7 +5,6 @@ const App = {
   meta: {},
   url: '',
   spreadsheetIds: {},
-  auth: {},
 
   get settings() {
     return this.appSettings;
@@ -63,20 +62,14 @@ const App = {
     this.getAppUrl();
 
     const { appSettings, url, spreadsheetIds } = this;
-
-    // Store authentication data
-    this.auth = {
-      adminUsername: appSettings['admin-username'],
-      adminPassword: appSettings['admin-password'],
-      currentToken: generateRandomString(64),
-    };
+    const settings = { ...appSettings };
 
     // Delete authentication data to avoid sending it to client
-    delete appSettings['admin-username'];
-    delete appSettings['admin-password'];
+    delete settings['admin-username'];
+    delete settings['admin-password'];
 
     this.meta = {
-      appSettings,
+      settings,
       url,
       spreadsheetIds,
     };
@@ -113,5 +106,22 @@ const App = {
     PropertiesService
       .getScriptProperties()
       .setProperty('spreadsheetIds', ssIds);
+  },
+
+  auth(username, password) {
+    return this.appSettings['admin-username'] === username
+      && this.appSettings['admin-password'] === password;
+  },
+
+  setCurrentToken(token) {
+    PropertiesService
+      .getScriptProperties()
+      .setProperty('currentToken', token);
+  },
+
+  getCurrentToken() {
+    return PropertiesService
+      .getScriptProperties()
+      .getProperty('currentToken');
   },
 };

@@ -18,65 +18,73 @@
 <body>
   <div id="global-wrapper" x-data="appXData()">
     <div class="container">
-      <!--Logo-->
-      <div class="row mt-5">
-        <div class="col-md-4 offset-md-4 -flex justify-content-center">
+      <!-- Login and password recovery form wrapper -->
+      <div id="sign-forms" x-show="!auth.successful">
+        <!--Logo-->
+        <div class="row mt-5">
+          <div class="col-md-4 offset-md-4 -flex justify-content-center">
+          </div>
         </div>
-      </div>
-      <!--  LOGIN FORM -->
-      <div class="row" x-show="signinVisible">
-        <div class="col-md-4 offset-md-4">
-          <div class="login-form bg-light mt-4 p-4">
-            <form @submit.prevent="login(event)" class="row g-3">
-              <h4>Bienvenido de nuevo</h4>
-              <div class="col-12">
-                <label>Usuario</label>
-                <input type="text" name="username" class="form-control" placeholder="Usuario" required>
-              </div>
-              <div class="col-12">
-                <label for="password">Contraseña</label>
-                <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
-              </div>
-              <!-- 
-                  <div class="col-12">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="rememberMe">
-                      <label class="form-check-label" for="rememberMe"> Recuérdame</label>
+        <!--  LOGIN FORM -->
+        <div class="row" x-show="signinVisible">
+          <div class="col-md-4 offset-md-4">
+            <div class="login-form bg-light mt-4 p-4">
+              <form @submit.prevent="login(event)" class="row g-3" id="login-form">
+                <h4>Bienvenido de nuevo</h4>
+                <div class="col-12">
+                  <label>Usuario</label>
+                  <input type="text" name="username" class="form-control" placeholder="Usuario" required>
+                </div>
+                <div class="col-12">
+                  <label for="password">Contraseña</label>
+                  <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <!-- 
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe"> Recuérdame</label>
+                      </div>
                     </div>
-                  </div>
-                -->
+                  -->
+                <div class="col-12">
+                  <button type="submit" class="btn btn-dark float-end">Iniciar sesión</button>
+                </div>
+              </form>
+              <hr class="mt-4">
               <div class="col-12">
-                <button type="submit" class="btn btn-dark float-end">Iniciar sesión</button>
+                <p class="text-center mb-0"><a href="" @click.prevent @click="signinVisible = !signinVisible">¿Olvidó su contraseña?</a></p>
               </div>
-            </form>
-            <hr class="mt-4">
-            <div class="col-12">
-              <p class="text-center mb-0"><a href="" @click.prevent @click="signinVisible = !signinVisible">¿Olvidó su contraseña?</a></p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- PASSWORD RECOVERY FORM -->
+        <div class="row" id="password-recovery-form" x-show="!signinVisible">
+          <div class="col-md-4 offset-md-4">
+            <div class="login-form bg-light mt-4 p-4">
+              <form onsubmit="" class="row g-3">
+                <h4>Restablecer contraseña</h4>
+                <div class="col-12">
+                  <label for="username">Usuario</label>
+                  <input type="text" name="username" class="form-control" id="username">
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-dark float-end">Restablecer contraseña</button>
+                </div>
+              </form>
+              <hr class="mt-4">
+              <div class="col-12">
+                <p class="text-center mb-0"><a href="" @click.prevent @click="signinVisible = !signinVisible">Volver a inicio de sesión</a></p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- PASSWORD RECOVERY FORM -->
-      <div class="row" id="password-recovery-form" x-show="!signinVisible">
-        <div class="col-md-4 offset-md-4">
-          <div class="login-form bg-light mt-4 p-4">
-            <form onsubmit="" class="row g-3">
-              <h4>Restablecer contraseña</h4>
-              <div class="col-12">
-                <label for="username">Usuario</label>
-                <input type="text" name="username" class="form-control" id="username">
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-dark float-end">Restablecer contraseña</button>
-              </div>
-            </form>
-            <hr class="mt-4">
-            <div class="col-12">
-              <p class="text-center mb-0"><a href="" @click.prevent @click="signinVisible = !signinVisible">Volver a inicio de sesión</a></p>
-            </div>
-          </div>
-        </div>
+      <!-- Settings view -->
+      <div id="settings-form" x-show="auth.successful">
+        <h3>Login successful</h3>
       </div>
     </div>
   </div>
@@ -103,14 +111,13 @@
           if (response.successful) {
             this.auth.successful = true;
             this.auth.token = response.token;
-            // Login successful
-            alert('Login successful');
+            // Login successful, empty login form fields
+            document.getElementById('login-form').reset();
           } else {
             this.auth.successful = false;
             // Username or password is invalid
             alert('Invalid username or password');
           }
-          console.log(response.token);
         }
       }
     }

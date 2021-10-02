@@ -5,11 +5,10 @@ function login(loginFormData) {
     token: '',
   };
 
-  if (username === App.auth.adminUsername) {
-    if (password === App.auth.adminPassword) {
-      auth.successful = true;
-      auth.token = App.auth.currentToken;
-    }
+  if (App.auth(username, password)) {
+    auth.successful = true;
+    auth.token = generateRandomString(64);
+    App.setCurrentToken(auth.token);
   }
 
   return auth;
