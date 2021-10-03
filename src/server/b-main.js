@@ -68,6 +68,13 @@ function saveSettings(settings) {
   App.setSettings(settings);
 }
 
+function updateSettings(settingsObj) {
+  if (App.isCurrentToken(settingsObj.token)) {
+    Logger.log(settingsObj.form);
+    // App.setSettings(settings);
+  }
+}
+
 // Function for development purposes only
 function deleteProperties() {
   PropertiesService.getScriptProperties().deleteAllProperties();

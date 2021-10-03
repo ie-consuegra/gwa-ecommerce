@@ -84,11 +84,305 @@
 
       <!-- Settings view -->
       <div id="settings-form" x-show="auth.successful">
-        <h3>Login successful</h3>
+        <div>
+          <h3 class="text-center my-3">Configuración</h3>
+          <form @submit.prevent="saveSettings(event)">
+            <div class="accordion" id="settings-accordion">
+              <!-- MY BUSINESS -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#my-business" aria-expanded="false" aria-controls="my-business"><i class="bi bi-shop me-2"></i>Mi negocio</button>
+                </h2>
+                <div id="my-business" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <label for="business-name" class="form-label">Nombre*</label>
+                          <input type="text" class="form-control" name="business-name" id="business-name" required>
+                          <div id="name-help" class="form-text">El nombre de su negocio se incluirá en la orden que se envía por WhatsApp</div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <label for="business-whatsapp" class="form-label">Número de WhatsApp*</label>
+                          <input type="text" class="form-control" name="business-whatsapp" id="business-whatsapp" required>
+                          <div id="whatsapp-help" class="form-text">Escriba el número sin espacios ni el signo +</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- DELIVERY -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#delivery" aria-expanded="false" aria-controls="delivery"><i class="bi bi-truck me-2"></i>Entrega/Despacho</button>
+                </h2>
+                <div id="delivery" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+                  <div class="accordion-body">
+                    <div class="row p-2 border rounded mb-2 bg-light">
+                      <div class="col-12 col-md-4">
+                        <div class="form-check">
+                          <label for="pickup" class="form-check-label">Recoger en sitio</label>
+                          <input type="checkbox" name="pickup" id="pickup" class="form-check-input" @change="pickupIsChecked = $event.target.checked">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-8">
+                        <input type="text" name="pickup-details" id="pickup-details" class="form-control" placeholder="Observaciones" x-show="pickupIsChecked" x-transition>
+                      </div>
+                    </div>
+                    <div class="row p-2 border rounded mb-2 bg-light">
+                      <div class="col-12 col-md-4">
+                        <div class="form-check">
+                          <label for="delivery-option" class="form-check-label">Entrega a domicilio</label>
+                          <input type="checkbox" name="delivery" id="delivery-option" class="form-check-input" @change="deliveryIsChecked = $event.target.checked">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-4 mb-1">
+                        <input type="text" name="delivery-price" id="delivery-price" class="form-control" placeholder="Costo" x-show="deliveryIsChecked" x-transition>
+                      </div>
+                      <div class="col-12 col-md-4">
+                        <input type="text" name="delivery-details" id="delivery-details" class="form-control" placeholder="Observaciones" x-show="deliveryIsChecked" x-transition>
+                      </div>
+                    </div>
+                    <div class="row p-2 border rounded bg-light">
+                      <div class="col-12 col-md-4">
+                        <div class="form-check">
+                          <label for="delivery-other" class="form-check-label">Otro</label>
+                          <input type="checkbox" name="delivery-other" id="delivery-other" class="form-check-input" @change="deliveryOtherIsChecked = $event.target.checked">
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-4 mb-1">
+                        <input type="text" name="delivery-other-price" id="delivery-other-price" class="form-control" placeholder="Costo" x-show="deliveryOtherIsChecked" x-transition>
+                      </div>
+                      <div class="col-12 col-md-4">
+                        <input type="text" name="delivery-other-details" id="delivery-other-details" class="form-control" placeholder="Observaciones" x-show="deliveryOtherIsChecked" x-transition>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- PAYMENT METHODS -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#payment-methods" aria-expanded="false" aria-controls="payment-methods"><i class="bi bi-credit-card me-2"></i>Medios de pago</button>
+                </h2>
+                <div id="payment-methods" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+                  <div class="accordion-body">
+                    <div id="payment-methods-list">
+                      <template x-for="(paymentMethod, index) in paymentMethods">
+                        <div class="row bg-light pt-3 pb-2 mb-2 rounded border">
+                          <div class="col-2 col-md-1 pt-2 d-flex justify-content-end">
+                            <a @click.prevent="removePaymentMethod(paymentMethod)" class="link-danger"><i class="bi bi-x-circle"></i></a>
+                          </div>
+                          <div class="col-10 col-md-4 mb-2">
+                            <input type="text" :name="`paymentMethodName${index}`" :id="`paymentMethodName${index}`" class="form-control" x-model="paymentMethod.name" placeholder="Medio de pago">
+                          </div>
+                          <div class="col-12 col-md-7 mb-2">
+                            <textarea :name="`paymentMethodDetails${index}`" :id="`paymentMethodDetails${index}`" rows="1" x-model="paymentMethod.details" class="form-control" placeholder="Información"></textarea>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" @click="addPaymentMethodInputs()"><i class="bi bi-plus me-2"></i>Nuevo medio de pago</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- PARAMETERS -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#parameters" aria-expanded="false" aria-controls="parameters"><i class="bi bi-gear me-2"></i>Parámetros</button>
+                </h2>
+                <div id="parameters" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-sm-6 d-none d-sm-block">
+                        <p class="mt-2">Moneda</p>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <label for="currency" class="form-label d-block d-sm-none">Moneda</label>
+                          <input type="text" class="form-control" id="currency" name="currency" value="$">
+                          <div id="currency-help" class="form-text">Signo que se usará para presentar los precios</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 d-none d-sm-block">
+                        <p class="mt-2">Separador decimal</p>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <label for="decimal-separator" class="form-label d-block d-sm-none">Separador decimal</label>
+                          <select class="form-control" id="decimal-separator" name="decimal-separator">
+                            <option value=",">Coma ","</option>
+                            <option value=".">Punto "."</option>
+                          </select>
+                          <div id="decimal-separator-help" class="form-text">Signo que se usará para separar los números decimales</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 d-none d-sm-block">
+                        <p class="mt-2">Centavos</p>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <label for="cents" class="form-label d-block d-sm-none">Centavos</label>
+                          <select class="form-control" id="cents" name="cents">
+                            <option value="true">Usar</option>
+                            <option value="false">No usar</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- GWA ECOMMERCE CONFIGURATION -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#gwa-ecommerce" aria-expanded="false" aria-controls="gwa-ecommerce"><i class="bi bi-hdd-network me-2"></i>Configuración de GWA eCommerce</button>
+                </h2>
+                <div id="gwa-ecommerce" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-sm-6 d-none d-sm-block">
+                        <p class="mt-2">Hosting de imágenes</p>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <label for="cents" class="form-label d-block d-sm-none">Hosting de imágenes</label>
+                          <select class="form-control" name="image-hosting" id="image-hosting">
+                            <option value="imagekit">imagekit.io</option>
+                            <option value="generic">Otro</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 d-none d-sm-block">
+                        <p class="mt-2">Administrador*</p>
+                      </div>
+                      <div class="col-12 col-sm-3">
+                        <div class="mb-3">
+                          <label for="admin-username" class="form-label d-block d-sm-none">Nombre administrador*</label>
+                          <input type="text" name="admin-username" id="admin-username" class="form-control" placeholder="Nombre administrador" required>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-3">
+                        <div class="mb-3">
+                          <label for="admin-password" class="form-label d-block d-sm-none">Contraseña administrador*</label>
+                          <input type="password" name="admin-password" id="admin-password" class="form-control" placeholder="Contraseña administrador" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 d-none d-sm-block">
+                        <p class="mt-2">Código para embeber la aplicación</p>
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <div class="mb-3">
+                          <p class="form-label d-block d-sm-none">Código para embeber la aplicación</p>
+                          <pre class="bg-light p-2 rounded" x-text ="`&lt;iframe src=&quot;${appUrl}&quot; frameborder=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;&quot;&gt;&lt;/iframe&gt;`">
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-12 col-sm-4 offset-sm-4 d-flex justify-content-center">
+                        <a class="btn btn-outline-success" x-bind:href="`https://docs.google.com/spreadsheets/d/${spreadsheetId}`" target="_blank">Ver hoja de cálculo del inventario</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Guardar los cambios</button>
+              </div>
+            </div>
+          </form>
+    
+          <div id="help-wrapper">
+            <h3 class="text-center my-3">Acerca de</h3>
+            <div class="accordion" id="about-accordion">
+              <!-- ABOUT -->
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="about-heading">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#about-content" aria-expanded="false" aria-controls="about-content">
+                    <i class="bi bi-info-circle me-3"></i>
+                    Acerca de
+                  </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="about-content" data-bs-parent="#about-accordion">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-12 col-md-4">
+                        <p class="display-6">GWA eCommerce v0.9</p>
+                        <p><strong>The online store that works with tools you already know</strong></p>
+                      </div>
+                      <div class="col-12 col-md-8">
+                        <p>GWA eCommerce is a one-person project developed by Ivan Consuegra. Usage of this web app is totally free. Its development is maintained by donations.</p>
+                        <h5>Some features of this release:</h5>
+                        <ul>
+                          <li>Fetch inventory from a Google Spreadsheet</li>
+                          <li>Ecommerce shopping cart</li>
+                          <li>Send orders via WhatsApp</li>
+                          <li>Remember customer data</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- CONTRIBUTE -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#contribution" aria-expanded="false" aria-controls="contribution"><i class="bi bi-hand-thumbs-up me-2"></i>Contribuye con el proyecto</button>
+                </h2>
+                <div id="contribution" class="accordion-collapse collapse" data-bs-parent="#about-accordion">
+                  <div class="accordion-body">
+                    <p>¡Muchas gracias por apoyar la mejora continua de esta aplicación!</p>
+                    <p>Algunas formas de contribuir son a través de la difusión del proyecto y con donaciones:</p>
+                    <div class="row">
+                      <div class="col-12 col-md-3 mb-3">
+                        <a href="https://www.buymeacoffee.com/ieconsuegra" target="_blank">Buy me a coffee</a>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <h6>Cripto</h6>
+                      <div class="col-12 col-md-4">
+                        <label for="bitcoin">Bitcoin</label>
+                        <input type="text"class="form-control" id="bitcoin" value="1NrS7wXKE9N4XTh2dtgJEje8hCv3p6HuMV" readonly>
+                      </div>
+                      <div class="col-12 col-md-4">
+                        <label for="bitcoin">Ethereum</label>
+                        <input type="text"class="form-control" id="ethereum" value="0x03751132bbcdef8f503dac9374739b5c92ddab67" readonly>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <a href="#" class="btn btn-outline-primary">Más formas de contribuir en la página del proyecto</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
     function appXData() {
       return {
@@ -96,6 +390,17 @@
         auth: {
           successful: false,
           token: '',
+        },
+        settings: {},
+        pickupIsChecked: false,
+        deliveryIsChecked: false,
+        deliveryOtherIsChecked: false,
+        paymentMethods: [],
+        appUrl: '',
+        spreadsheetId: '',
+        saveSettingsStatus: {
+          isSaving: false,
+          isSaved: false,
         },
         login(event) {
           const loginForm = event.target;
@@ -113,12 +418,80 @@
             this.auth.token = response.token;
             // Login successful, empty login form fields
             document.getElementById('login-form').reset();
+            // Load settings
+            this.fetchMeta();
           } else {
             this.auth.successful = false;
             // Username or password is invalid
             alert('Invalid username or password');
           }
-        }
+        },
+
+        addPaymentMethodInputs() {
+          this.paymentMethods.push(
+            {
+              name: '',
+              details: '',
+            }
+          );
+        },
+        removePaymentMethod(paymentMethod) {
+          const filteredPaymentMethods = this.paymentMethods.filter((item) => {
+            if (item.name !== paymentMethod.name) {return item}
+          });
+          this.paymentMethods = filteredPaymentMethods;
+        },
+        fetchMeta() {
+          const load = this.load.bind(this);
+          google
+            .script
+            .run
+            .withSuccessHandler(load)
+            .fetchAppMeta();
+        },
+        load(meta) {
+          this.appUrl = meta.url;
+          this.settings = meta.appSettings;
+          this.spreadsheetId = meta.spreadsheetIds.stock;
+        },
+        saveSettings(e) {
+          const { token } = this.auth;
+          if (this.auth.successful) {
+            if (typeof token === 'String' && token.length === 64) {
+              const settingsSaved = this.settingsSaved.bind(this);
+              const form = e.target;
+
+              if(this.deliveryIsValid()) {
+                const saveSettingsModal = new bootstrap.Modal(document.getElementById('saveSettingsModal'));
+                saveSettingsModal.show();
+                this.saveSettingsStatus.isSaving = true;
+                google
+                  .script
+                  .run
+                  .withSuccessHandler(settingsSaved)
+                  .updateSettings({ form, token });
+              } else {
+                const deliveryMissingModal = new bootstrap.Modal(document.getElementById('deliveryMissingModal'));
+                deliveryMissingModal.show();
+              }
+            }
+          }
+        },
+        deliveryIsValid() {
+          const { 
+            pickupIsChecked,
+            deliveryIsChecked,
+            deliveryOtherIsChecked
+          } = this;
+
+          return pickupIsChecked
+            || deliveryIsChecked
+            || deliveryOtherIsChecked;
+        },
+        settingsSaved() {
+          this.saveSettingsStatus.isSaving = false;
+          this.saveSettingsStatus.isSaved = true;
+        },
       }
     }
   </script>

@@ -124,4 +124,8 @@ const App = {
       .getScriptProperties()
       .getProperty('currentToken');
   },
+
+  isCurrentToken(token) {
+    return token === this.getCurrentToken();
+  }
 };
