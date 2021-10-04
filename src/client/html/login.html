@@ -486,8 +486,40 @@
         },
         load(meta) {
           this.appUrl = meta.url;
-          this.settings = meta.appSettings;
+          this.loadSettings(meta.settings);
           this.spreadsheetId = meta.spreadsheetIds.stock;
+        },
+        loadSettings(settings) {
+          Object.entries(settings).forEach((field) => {
+            const fieldName = field[0];
+            const fieldValue = field[1];
+
+            if (fieldName.startsWith('paymentMethod')) {
+              // Load payment methods and details
+            } else {
+              switch (fieldName) {
+              case 'pickup':
+                this.pickupIsChecked = true;
+                document.getElementById(fieldName)
+                  .checked = true;
+                break;
+              case 'delivery-option':
+                this.deliveryIsChecked = true;
+                document.getElementById(fieldName)
+                  .checked = true;
+                break;
+              case 'delivery-other':
+                this.deliveryOtherIsChecked = true;
+                document.getElementById(fieldName)
+                  .checked = true;
+                break;
+              default:
+                document.getElementById(fieldName)
+                  .value = fieldValue;
+                break;
+              }
+            }
+          })
         },
         saveSettings(e) {
           const { token } = this.auth;
