@@ -127,5 +127,5 @@ const App = {
 
   isCurrentToken(token) {
     return token === this.getCurrentToken();
-  }
+  },
 };

@@ -70,8 +70,11 @@ function saveSettings(settings) {
 
 function updateSettings(settingsObj) {
   if (App.isCurrentToken(settingsObj.token)) {
-    Logger.log(settingsObj.form);
+    delete settingsObj.token;
+    Logger.log(settingsObj);
     // App.setSettings(settings);
+  } else {
+    Logger.log('There was an authorization error');
   }
 }
 

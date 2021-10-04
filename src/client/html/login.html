@@ -381,6 +381,41 @@
         </div>
       </div>
     </div>
+
+    <!-- Delivery option missing - warning modal -->
+    <div class="modal" tabindex="-1" id="deliveryMissingModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Faltan campos por completar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Debes seleccionar al menos una forma de entrega.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save settings modal -->
+    <div class="modal" tabindex="-1" id="saveSettingsModal" data-bs-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="row position-relative mt-5" id="spinner-container" x-show="saveSettingsStatus.isSaving">
+              <div class="spinner-border text-secondary position-absolute" role="status" id="spinner">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <p x-show="saveSettingsStatus.isSaving">Guardando la configuración...</p>
+            <p x-show="saveSettingsStatus.isSaved">Se han guardado los cambios. Por favor actualice/recargue esta página para finalizar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
@@ -457,9 +492,10 @@
         saveSettings(e) {
           const { token } = this.auth;
           if (this.auth.successful) {
-            if (typeof token === 'String' && token.length === 64) {
+            if (typeof token === 'string' && token.length === 64) {
               const settingsSaved = this.settingsSaved.bind(this);
-              const form = e.target;
+              const formElem = e.target;
+              const settingsData = this.convertFormIntoDataObject(formElem);
 
               if(this.deliveryIsValid()) {
                 const saveSettingsModal = new bootstrap.Modal(document.getElementById('saveSettingsModal'));
@@ -469,7 +505,7 @@
                   .script
                   .run
                   .withSuccessHandler(settingsSaved)
-                  .updateSettings({ form, token });
+                  .updateSettings({ ...settingsData, token });
               } else {
                 const deliveryMissingModal = new bootstrap.Modal(document.getElementById('deliveryMissingModal'));
                 deliveryMissingModal.show();
@@ -491,6 +527,17 @@
         settingsSaved() {
           this.saveSettingsStatus.isSaving = false;
           this.saveSettingsStatus.isSaved = true;
+        },
+        convertFormIntoDataObject(formElem) {
+          const formData = new FormData(formElem);
+          const settingsData = {};
+
+          // Generate a new object containing all form values
+          for (const field of formData.entries()) {
+            settingsData[field[0]] = field[1];
+          }
+
+          return settingsData;
         },
       }
     }
