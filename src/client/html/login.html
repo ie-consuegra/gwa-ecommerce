@@ -265,6 +265,7 @@
                         </div>
                       </div>
                     </div>
+                    <!-- ADMIN/PASSWORD FIELDS DISABLED TEMPORARILY 
                     <div class="row">
                       <div class="col-sm-6 d-none d-sm-block">
                         <p class="mt-2">Administrador*</p>
@@ -282,6 +283,7 @@
                         </div>
                       </div>
                     </div>
+                    -->
                     <div class="row">
                       <div class="col-sm-6 d-none d-sm-block">
                         <p class="mt-2">Código para embeber la aplicación</p>
@@ -490,12 +492,27 @@
           this.spreadsheetId = meta.spreadsheetIds.stock;
         },
         loadSettings(settings) {
+          const paymentMethodsArr = [];
           Object.entries(settings).forEach((field) => {
             const fieldName = field[0];
             const fieldValue = field[1];
 
             if (fieldName.startsWith('paymentMethod')) {
-              // Load payment methods and details
+              let indexInPaymentMethodsArr = 0;
+              const fieldNameLength = fieldName.length;
+              if (fieldName.startsWith('paymentMethodName')) {
+                indexInPaymentMethodsArr = Number(fieldName.substring(17, fieldNameLength));
+                if (!paymentMethodsArr[indexInPaymentMethodsArr]) {
+                  paymentMethodsArr[indexInPaymentMethodsArr] = {};
+                }
+                paymentMethodsArr[indexInPaymentMethodsArr].name = fieldValue;
+              } else {
+                indexInPaymentMethodsArr = Number(fieldName.substring(20, fieldNameLength));
+                if (!paymentMethodsArr[indexInPaymentMethodsArr]) {
+                  paymentMethodsArr[indexInPaymentMethodsArr] = {};
+                }
+                paymentMethodsArr[indexInPaymentMethodsArr].details = fieldValue;
+              }
             } else {
               switch (fieldName) {
               case 'pickup':
@@ -520,6 +537,7 @@
               }
             }
           })
+          this.paymentMethods = paymentMethodsArr;
         },
         saveSettings(e) {
           const { token } = this.auth;
