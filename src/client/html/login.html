@@ -265,25 +265,6 @@
                         </div>
                       </div>
                     </div>
-                    <!-- ADMIN/PASSWORD FIELDS DISABLED TEMPORARILY 
-                    <div class="row">
-                      <div class="col-sm-6 d-none d-sm-block">
-                        <p class="mt-2">Administrador*</p>
-                      </div>
-                      <div class="col-12 col-sm-3">
-                        <div class="mb-3">
-                          <label for="admin-username" class="form-label d-block d-sm-none">Nombre administrador*</label>
-                          <input type="text" name="admin-username" id="admin-username" class="form-control" placeholder="Nombre administrador" required>
-                        </div>
-                      </div>
-                      <div class="col-12 col-sm-3">
-                        <div class="mb-3">
-                          <label for="admin-password" class="form-label d-block d-sm-none">Contraseña administrador*</label>
-                          <input type="password" name="admin-password" id="admin-password" class="form-control" placeholder="Contraseña administrador" required>
-                        </div>
-                      </div>
-                    </div>
-                    -->
                     <div class="row">
                       <div class="col-sm-6 d-none d-sm-block">
                         <p class="mt-2">Código para embeber la aplicación</p>
@@ -294,6 +275,13 @@
                           <pre class="bg-light p-2 rounded" x-text ="`&lt;iframe src=&quot;${appUrl}&quot; frameborder=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot; style=&quot;&quot;&gt;&lt;/iframe&gt;`">
                           </pre>
                         </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-6">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#change-password-modal">
+                          Cambiar contraseña
+                        </button>
                       </div>
                     </div>
                     <div class="row mt-3">
@@ -418,6 +406,48 @@
         </div>
       </div>
     </div>
+
+    <!-- Change password modal -->
+    <div class="modal" id="change-password-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cambiar contraseña</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="changePassword()">
+              <div class="row">
+                <div class="col-12">
+                  <div class="my-3">
+                    <label for="current-admin-password" class="form-label d-block">Contraseña actual</label>
+                    <input type="password" name="current-admin-password" id="new-admin-password" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="new-admin-password" class="form-label d-block">Nueva contraseña</label>
+                    <input type="password" name="new-admin-password" id="new-admin-password" class="form-control" required>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="new-admin-password-confirmation" class="form-label d-block">Confirme nueva contraseña</label>
+                    <input type="password" name="new-admin-password-confirmation" id="new-admin-password-confirmation" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-end mt-3">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script>
@@ -588,6 +618,9 @@
           }
 
           return settingsData;
+        },
+        changePassword() {
+          console.log('I`m In');
         },
       }
     }
