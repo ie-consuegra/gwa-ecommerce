@@ -416,7 +416,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="changePassword()">
+            <form @submit.prevent="changePassword(event)">
               <div class="row">
                 <div class="col-12">
                   <div class="my-3">
@@ -619,8 +619,10 @@
 
           return settingsData;
         },
-        changePassword() {
+        changePassword(event) {
           console.log('I`m In');
+          const form = event.target;
+          google.script.run.withSuccessHandler().changePassword(form);
         },
       }
     }

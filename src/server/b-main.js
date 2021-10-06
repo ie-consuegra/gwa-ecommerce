@@ -71,11 +71,23 @@ function saveSettings(settings) {
 function updateSettings(settingsObj) {
   if (App.isCurrentToken(settingsObj.token)) {
     delete settingsObj.token;
-    Logger.log(settingsObj);
-    // App.setSettings(settings);
+    App.updateSettings(settingsObj);
   } else {
     Logger.log('There was an authorization error');
   }
+}
+
+function changePassword(formData) {
+  const currentPass = formData['current-admin-password'];
+  const newPass = formData['new-admin-password'];
+  let changeSuccessful = false;
+
+  if (App.isCurrentPassword(currentPass)) {
+    App.setNewPassword(newPass);
+    changeSuccessful = true;
+  }
+
+  return changeSuccessful;
 }
 
 // Function for development purposes only

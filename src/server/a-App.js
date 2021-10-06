@@ -128,4 +128,24 @@ const App = {
   isCurrentToken(token) {
     return token === this.getCurrentToken();
   },
+
+  isCurrentPassword(password) {
+    return this.appSettings['admin-password'] === password;
+  },
+
+  setNewPassword(password) {
+    this.appSettings['admin-password'] = password;
+    const { appSettings } = this;
+    this.setSettings(appSettings);
+  },
+
+  updateSettings(settings) {
+    const newSettings = { ...settings };
+    const username = this.appSettings['admin-username'];
+    const password = this.appSettings['admin-password'];
+    newSettings['admin-username'] = username;
+    newSettings['admin-password'] = password;
+
+    this.setSettings(newSettings);
+  },
 };
