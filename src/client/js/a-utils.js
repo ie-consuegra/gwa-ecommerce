@@ -82,7 +82,7 @@ function formatNumber(num, decSeparator = ',', decimals = 0, addZero = false) {
  */
 function formatCurrency(number) {
   let formattedCurrency = '';
-  let numberStr = '';
+  let numberStr = number;
   if (number) {
     if (typeof number === 'number') {
       numberStr = number.toString();
@@ -94,4 +94,18 @@ function formatCurrency(number) {
     formattedCurrency = `${CURRENCY_SYMBOL}0`;
   }
   return formattedCurrency;
+}
+
+/** Take a number as JS integer or float
+ * which could be in a ######.## format
+ * change the point for comma if required by user
+ * and returns a formatted value including currency
+ * symbol
+ * @param {Number} number Value to be formatted
+ * @returns {String} The formatted value as a string
+ */
+function formatValue(number) {
+  const numStr = number.toString();
+  const adaptedValue = numStr.indexOf('.') > 0 ? numStr.replace('.', DECIMAL_SEPARATOR) : numStr;
+  return formatCurrency(adaptedValue);
 }

@@ -22,7 +22,7 @@ function queryStock() {
   const stock = connection.table('db', types).get();
   const data = {
     stock,
-    settings: App.meta.appSettings,
+    settings: App.meta.settings,
   };
   return JSON.stringify(data, null, ' ');
 }

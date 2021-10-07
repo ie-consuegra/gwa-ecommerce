@@ -136,7 +136,7 @@
                       <div class="col-12 col-md-4">
                         <div class="form-check">
                           <label for="delivery-option" class="form-check-label">Entrega a domicilio</label>
-                          <input type="checkbox" name="delivery" id="delivery-option" class="form-check-input" @change="deliveryIsChecked = $event.target.checked">
+                          <input type="checkbox" name="delivery-option" id="delivery-option" class="form-check-input" @change="deliveryIsChecked = $event.target.checked">
                         </div>
                       </div>
                       <div class="col-12 col-md-4 mb-1">
@@ -545,25 +545,25 @@
               }
             } else {
               switch (fieldName) {
-              case 'pickup':
-                this.pickupIsChecked = true;
-                document.getElementById(fieldName)
-                  .checked = true;
-                break;
-              case 'delivery-option':
-                this.deliveryIsChecked = true;
-                document.getElementById(fieldName)
-                  .checked = true;
-                break;
-              case 'delivery-other':
-                this.deliveryOtherIsChecked = true;
-                document.getElementById(fieldName)
-                  .checked = true;
-                break;
-              default:
-                document.getElementById(fieldName)
-                  .value = fieldValue;
-                break;
+                case 'pickup':
+                  this.pickupIsChecked = true;
+                  document.getElementById(fieldName)
+                    .checked = true;
+                  break;
+                case 'delivery-option':
+                  this.deliveryIsChecked = true;
+                  document.getElementById(fieldName)
+                    .checked = true;
+                  break;
+                case 'delivery-other':
+                  this.deliveryOtherIsChecked = true;
+                  document.getElementById(fieldName)
+                    .checked = true;
+                  break;
+                default:
+                  document.getElementById(fieldName)
+                    .value = fieldValue;
+                  break;
               }
             }
           })

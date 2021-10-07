@@ -46,7 +46,7 @@
                 <img class="card-img-top" x-bind:alt="item.name" x-bind:src="item.imgUrl">
                 <div class="card-body pb-1">
                   <p class="card-text" x-text="item.name"></p>
-                  <h5 class="card-title" x-text="formatCurrency(item.price)"></h5>
+                  <h5 class="card-title" x-text="formatValue(item.price)"></h5>
                   <p class="card-subtitle mb-1 text-muted" x-text="isAvailable(item.stock)"></p>
                 </div>
                 <div class="card-footer bg-white pb-3">
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col-8 col-sm-7 col-md-8 col-lg-9 col-xl-10 d-flex justify-content-end align-items-center">
                           <div>
-                            <p class="mb-0" x-text="formatCurrency(item.inCart * item.price)"></p>
+                            <p class="mb-0" x-text="formatValue(item.inCart * item.price)"></p>
                           </div>
                         </div>
                       </div>
@@ -140,7 +140,7 @@
             </div>
             <div class="d-flex justify-content-between px-3 mt-3">
               <span class="fw-bold" x-show="totalItemsInCart > 0">Subtotal</span>
-              <span class="fw-bold" x-text="formatCurrency(subtotal)"></span>
+              <span class="fw-bold" x-text="formatValue(subtotal)"></span>
             </div>
           </div>
           <div class="col-sm-12 col-md-4 p-3 border rounded" id="user-info-container" x-show="totalItemsInCart > 0">
@@ -189,13 +189,13 @@
               </div>
               <div class="clearfix">
                 <span class="float-start fw-bold">Subtotal</span>
-                <span class="float-end fw-bold" x-text="formatCurrency(subtotal)"></span>
+                <span class="float-end fw-bold" x-text="formatValue(subtotal)"></span>
                 <br>
                 <span class="float-start" x-text="deliveryChosen"></span>
-                <span class="float-end" x-text="formatCurrency(deliveryCost)"></span>
+                <span class="float-end" x-text="formatValue(deliveryCost)"></span>
                 <br>
                 <span class="float-start fw-bold fs-5">Total a pagar</span>
-                <span class="float-end fw-bold fs-5" x-text="formatCurrency(totalToPay)"></span>
+                <span class="float-end fw-bold fs-5" x-text="formatValue(totalToPay)"></span>
               </div>
               <div class="p-1"><hr></div>
               <div class="mt-2 p-3 rounded bg-light">

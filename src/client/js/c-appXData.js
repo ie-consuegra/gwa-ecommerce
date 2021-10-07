@@ -8,7 +8,7 @@ function appXData() {
   return {
     // Store stuff
     stock: [],
-    formatCurrency,
+    formatValue,
     isAvailable,
     isActive,
 
@@ -29,9 +29,10 @@ function appXData() {
         .run
         .withSuccessHandler((data) => {
           const dataObj = JSON.parse(data);
+          // Get settings before loading products
+          self.applySettings(dataObj.settings);
           // Add inCart attribute to each stock item
           self.stock = dataObj.stock.map((item) => ({ ...item, inCart: 0 }));
-          self.applySettings(dataObj.settings);
         })
         .queryStock();
     },
