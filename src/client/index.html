@@ -17,20 +17,27 @@
 <body>
 
   <div class="global-wrapper" x-data="appXData()" x-init="fetchStockOnInit()">
-      <ul class="nav justify-content-end sticky-top bg-light shadow-sm">
-        <li class="nav-item" x-show="storeVisible" @click.prevent="storeVisible = !storeVisible">
-          <a href="#" class="nav-link fs-5">
-            <i class="bi bi-cart"></i>
-            <span class="badge rounded-pill bg-danger" x-text="totalItemsInCart" x-show="totalItemsInCart > 0" x-transition></span>
-          </a>
-        </li>
-        <li class="nav-item" x-show="!storeVisible" @click.prevent="storeVisible = !storeVisible">
-          <a href="#" class="nav-link fs-5">
-            <i class="bi bi-arrow-left-short"></i>
-            <i class="bi bi-shop"></i>
-          </a>
-        </li>
-      </ul>
+    <nav class="navbar sticky-top shadow-sm bg-white">
+      <div class="container">
+        <a href="" class="navbar-brand" @click.prevent="storeVisible = true">
+          <img :src="logoUrl" alt="" height="34" width="34">
+        </a>
+        <ul class="nav justify-content-end">
+          <li class="nav-item" x-show="storeVisible" @click.prevent="storeVisible = !storeVisible">
+            <a href="#" class="nav-link fs-5">
+              <i class="bi bi-cart"></i>
+              <span class="badge rounded-pill bg-danger" x-text="totalItemsInCart" x-show="totalItemsInCart > 0" x-transition></span>
+            </a>
+          </li>
+          <li class="nav-item" x-show="!storeVisible" @click.prevent="storeVisible = !storeVisible">
+            <a href="#" class="nav-link fs-5">
+              <i class="bi bi-arrow-left-short"></i>
+              <i class="bi bi-shop"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <!-- STORE VIEW -->
     <div id="store-view" x-show="storeVisible">
       <div class="container" >

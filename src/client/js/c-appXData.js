@@ -7,6 +7,7 @@
 function appXData() {
   return {
     // Store stuff
+    logoUrl: 'https://ik.imagekit.io/2kiozwxkybfj/default_logo_AUVJYEYV5BK.png?updatedAt=1633640911103',
     stock: [],
     formatValue,
     isAvailable,
