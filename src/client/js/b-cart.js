@@ -111,6 +111,12 @@ const cart = {
     USE_CENTS = settings.cents === 'true';
 
     this.settings = settings;
+
+    // Set logo url
+    if (settings.logo) {
+      this.logoUrl = settings.logo;
+    }
+
     this.hasPickup = !!settings.pickup;
     if (this.hasPickup) {
       document.getElementById('pickup').checked = true;
