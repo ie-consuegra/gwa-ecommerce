@@ -32,7 +32,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="business-name" class="form-label">Nombre*</label>
-                      <input type="text" class="form-control" name="business-name" id="business-name" required>
+                      <input type="text" class="form-control" name="business-name" id="business-name" x-model="title" required>
                       <div id="name-help" class="form-text">El nombre de su negocio se incluirá en la orden que se envía por WhatsApp</div>
                     </div>
                   </div>
@@ -40,7 +40,18 @@
                     <div class="mb-3">
                       <label for="business-whatsapp" class="form-label">Número de WhatsApp*</label>
                       <input type="text" class="form-control" name="business-whatsapp" id="business-whatsapp" required>
-                      <div id="whatsapp-help" class="form-text">Escriba el número sin espacios ni el signo +</div>
+                      <div id="whatsapp-help" class="form-text">Escriba el número sin espacios e incluya el indicativo/prefijo telefónico de su país sin el signo +</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 d-none d-sm-block">
+                    <p class="mt-2">Descripción del negocio</p>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <div class="mb-3">
+                      <label for="business-description" class="form-label d-block d-sm-none">Descripción del negocio</label>
+                      <input type="text" class="form-control" id="business-description" name="business-description" value="" x-model="description">
                     </div>
                   </div>
                 </div>
@@ -222,7 +233,7 @@
                   <div class="col-12 col-sm-6">
                     <div class="mb-3">
                       <label for="logo" class="form-label d-block d-sm-none">URL del logo</label>
-                      <input type="text" class="form-control" id="logo" name="logo" value="">
+                      <input type="text" class="form-control" id="logo" name="logo" value="" x-model="logoUrl">
                     </div>
                   </div>
                 </div>
@@ -239,8 +250,11 @@
                   </div>
                 </div>
                 <div class="row mt-3">
-                  <div class="col-12 col-sm-4 offset-sm-4 d-flex justify-content-center">
+                  <div class="col-12 col-sm-4 offset-sm-2 d-flex justify-content-center">
                     <a class="btn btn-outline-success" x-bind:href="`https://docs.google.com/spreadsheets/d/${spreadsheetId}`" target="_blank">Ver hoja de cálculo del inventario</a>
+                  </div>
+                  <div class="col-12 col-sm-4 d-flex justify-content-center">
+                    <a :href="genDownloadFileLink()" class="btn-outline-primary" download="index.html">Descargar página web</a>
                   </div>
                 </div>
               </div>
@@ -372,6 +386,9 @@
         paymentMethods: [],
         appUrl: '',
         spreadsheetId: '',
+        logoUrl: '',
+        title: '',
+        description: '',
         saveSettingsStatus: {
           isSaving: false,
           isSaved: false,
@@ -434,7 +451,46 @@
         settingsSaved() {
           this.saveSettingsStatus.isSaving = false;
           this.saveSettingsStatus.isSaved = true;
-        }
+        },
+
+        // Generate html and download link methods
+        generateHTML() {
+          const {
+            title,
+            description,
+            logoUrl,
+            appUrl,
+          } = this;
+
+          const html = `<!DOCTYPE html>
+          <html lang="es">
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="description" content= "${description}" />
+            <meta name="robots" content= "index, follow">
+            <meta property="og:title" content="${title}" />
+            <meta property="og:description" content="${description}" />
+            <meta property="og:image" content="${logoUrl}" />
+            <title>${title}</title>
+            <link rel="shortcut icon" href="${logoUrl}" type="image/x-icon">
+            <link rel="icon" href="${logoUrl}" type="image/x-icon">
+          </head>
+          <body>
+            <iframe src="${appUrl}" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+              Su navegador no soporta iframes
+          </iframe>
+          </body>
+          </html>`;
+
+          return html;
+        },
+
+        genDownloadFileLink() {
+          const html = this.generateHTML();
+          return `data:text/plain;charset=utf-8,${html}`;
+        },
       }
     }
   </script>
