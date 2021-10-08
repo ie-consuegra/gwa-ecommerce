@@ -54,7 +54,7 @@
                 <div class="card-body pb-1">
                   <p class="card-text" x-text="item.name"></p>
                   <h5 class="card-title" x-text="formatValue(item.price)"></h5>
-                  <p class="card-subtitle mb-1 text-muted" x-text="isAvailable(item.stock)"></p>
+                  <p class="card-subtitle mb-1 text-muted" x-text="isAvailable(item)"></p>
                 </div>
                 <div class="card-footer bg-white pb-3">
                   <div class="footer-element" x-show="!isInCart(item.inCart)">

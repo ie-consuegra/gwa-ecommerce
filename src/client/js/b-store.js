@@ -5,8 +5,12 @@
  * @param {Number} stock Quantity of items available
  * @returns {String}
  */
-function isAvailable(stock) {
-  return stock === 0 ? 'Agotado' : `${stock.toString()} disponibles`;
+function isAvailable(item) {
+  let availability = '';
+  if (item.type.toUpperCase() === 'PRODUCTO') {
+    availability = item.stock === 0 ? 'Agotado' : `${item.stock.toString()} disponibles`;
+  }
+  return availability;
 }
 
 /** Return the "disabled" string
@@ -16,5 +20,9 @@ function isAvailable(stock) {
  * @returns {String}
  */
 function isActive(item) {
-  return item.stock > 0 ? '' : 'disabled';
+  let active = '';
+  if (item.type.toUpperCase() === 'PRODUCTO') {
+    active = item.stock > 0 ? '' : 'disabled';
+  }
+  return active;
 }
