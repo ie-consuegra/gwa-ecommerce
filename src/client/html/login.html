@@ -262,6 +262,7 @@
                 </h2>
                 <div id="gwa-ecommerce" class="accordion-collapse collapse" data-bs-parent="#settings-accordion">
                   <div class="accordion-body">
+                    <!-- Image hosting selector
                     <div class="row">
                       <div class="col-sm-6 d-none d-sm-block">
                         <p class="mt-2">Hosting de imágenes</p>
@@ -275,7 +276,8 @@
                           </select>
                         </div>
                       </div>
-                    </div>
+                    </div> 
+                    -->
                     <div class="row">
                       <div class="col-sm-6 d-none d-sm-block">
                         <p class="mt-2">URL del logo</p>
@@ -599,8 +601,10 @@
                   this.logoUrl = fieldValue;
                   break;
                 default:
-                  document.getElementById(fieldName)
-                    .value = fieldValue;
+                  if (document.getElementById(fieldName)) {
+                    document.getElementById(fieldName)
+                      .value = fieldValue;
+                  }
                   break;
               }
             }
