@@ -448,7 +448,7 @@
                 <div class="col-12">
                   <div class="my-3">
                     <label for="current-admin-password" class="form-label d-block">Contraseña actual</label>
-                    <input type="password" name="current-admin-password" id="new-admin-password" class="form-control" required>
+                    <input type="password" name="current-admin-password" id="current-admin-password" class="form-control" required>
                   </div>
                 </div>
                 <div class="col-12">
@@ -662,9 +662,23 @@
           return settingsData;
         },
         changePassword(event) {
-          console.log('I`m In');
           const form = event.target;
-          google.script.run.withSuccessHandler().changePassword(form);
+          const formData = new FormData(form);
+          if (formData.get('new-admin-password') === formData.get('new-admin-password-confirmation')) {
+            google.script.run
+              .withSuccessHandler((changeSuccessful) => {
+                if(changeSuccessful) {
+                  form.reset();
+                  const modalElement = document.getElementById('change-password-modal');
+                  const changePasswordModal = bootstrap.Modal.getInstance(modalElement);
+                  changePasswordModal.hide();
+                  alert('La contraseña ha sido cambiada satisfactoriamente');
+                }
+              })
+              .changePassword(form);
+          } else {
+            alert('La nueva contraseña y su confirmación no coinciden');
+          }
         },
 
         // Generate html and download link methods
