@@ -63,11 +63,11 @@
         <div class="row" id="password-recovery-form" x-show="!signinVisible">
           <div class="col-md-4 offset-md-4">
             <div class="login-form bg-light mt-4 p-4">
-              <form onsubmit="" class="row g-3">
+              <form @submit.prevent="recoverPassword(event)" class="row g-3">
                 <h4>Restablecer contraseña</h4>
                 <div class="col-12">
-                  <label for="username">Usuario</label>
-                  <input type="text" name="username" class="form-control" id="username">
+                  <label for="username-recovery">Usuario</label>
+                  <input type="text" name="username-recovery" class="form-control" id="username-recovery">
                 </div>
                 <div class="col-12">
                   <button type="submit" class="btn btn-dark float-end">Restablecer contraseña</button>
@@ -704,6 +704,21 @@
         genDownloadFileLink() {
           const html = this.generateHTML();
           return `data:text/plain;charset=utf-8,${html}`;
+        },
+
+        recoverPassword(event) {
+          const formData = new FormData(event.target);
+          const username = formData.get('username-recovery');
+
+          google.script.run
+            .withSuccessHandler((recoverySuccessful) => {
+              if (recoverySuccessful) {
+                alert('Recuperación exitosa de la contraseña, por favor vaya a la hoja de cálculo que usa como base de datos para obtener la contraseña temporal');
+              } else {
+                alert('Nombre de usuario incorrecto');
+              }
+            })
+            .recoverPassword(username);
         },
       }
     }

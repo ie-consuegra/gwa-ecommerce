@@ -90,6 +90,25 @@ function changePassword(formData) {
   return changeSuccessful;
 }
 
+function recoverPassword(username) {
+  let recoverSuccessful = false;
+  if (App.isAdmin(username)) {
+    const newTempPassword = generateRandomString(8);
+    App.setNewPassword(newTempPassword);
+
+    const ss = SpreadsheetApp.openByUrl(stockDB.url);
+    const sheet = ss.insertSheet('PasswordRecovery');
+
+    const values = [['Su nueva contraseña:'],
+      [newTempPassword],
+      ['Esta hoja (PasswordRecovery) se creó solo para guardar la nueva contraseña temporal, puede eliminarla cuando desee']];
+
+    sheet.getRange(1, 1, 3, 1).setValues(values);
+    recoverSuccessful = true;
+  }
+  return recoverSuccessful;
+}
+
 // Function for development purposes only
 function deleteProperties() {
   PropertiesService.getScriptProperties().deleteAllProperties();

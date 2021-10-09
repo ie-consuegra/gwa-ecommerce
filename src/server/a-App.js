@@ -148,4 +148,8 @@ const App = {
 
     this.setSettings(newSettings);
   },
+
+  isAdmin(username) {
+    return this.appSettings['admin-username'] === username;
+  },
 };
