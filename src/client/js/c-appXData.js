@@ -37,5 +37,10 @@ function appXData() {
         })
         .queryStock();
     },
+
+    initializeApp() {
+      this.fetchStockOnInit();
+      this.loadRegisteredCustomer(); // Method from cart.js
+    },
   };
 }

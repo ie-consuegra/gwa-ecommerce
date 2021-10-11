@@ -16,7 +16,7 @@
 </head>
 <body>
 
-  <div class="global-wrapper" x-data="appXData()" x-init="fetchStockOnInit()">
+  <div class="global-wrapper" x-data="appXData()" x-init="initializeApp()">
     <nav class="navbar sticky-top shadow-sm bg-white">
       <div class="container">
         <a href="" class="navbar-brand" @click.prevent="storeVisible = true">
@@ -192,7 +192,7 @@
               </div>
               <div class="form-check mb-3">
                 <input type="checkbox" name="remember-me" id="remember-me" class="form-check-input" checked>
-                <label for="remember-me" class="form-check-label">Recuérdame</label>
+                <label for="remember-me" class="form-check-label">Recuérdame en este dispositivo</label>
               </div>
               <div class="clearfix">
                 <span class="float-start fw-bold">Subtotal</span>

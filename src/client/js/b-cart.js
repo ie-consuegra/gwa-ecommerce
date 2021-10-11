@@ -309,6 +309,9 @@ ${detailsLine}`;
   },
 
   launchWhatsapp(event) {
+    if (document.getElementById('remember-me').checked) {
+      this.registerCustomer();
+    }
     const cartFormData = new FormData(event.target);
     const cartList = this.getItemsInCart();
 
@@ -322,5 +325,32 @@ ${detailsLine}`;
     const waUrl = this.whatsappApiUrlGenerator(encodedWhatsappText);
 
     window.open(waUrl, '_blank');
+  },
+
+  loadRegisteredCustomer() {
+    if (localStorage.getItem('customerInfo')) {
+      const customerInfoJSON = localStorage.getItem('customerInfo');
+      const customerInfo = JSON.parse(customerInfoJSON);
+
+      Object.entries(customerInfo).forEach((field) => {
+        const fieldName = field[0];
+        const fieldValue = field[1];
+
+        const inputElem = document.getElementById(fieldName);
+        inputElem.value = fieldValue;
+      });
+    }
+  },
+
+  registerCustomer() {
+    const inputsIds = ['name', 'address', 'contact', 'landmark-zip', 'extra-info'];
+    const customerInfo = {};
+
+    inputsIds.forEach((inputId) => {
+      customerInfo[inputId] = document.getElementById(inputId).value;
+    });
+
+    const customerInfoJSON = JSON.stringify(customerInfo);
+    localStorage.setItem('customerInfo', customerInfoJSON);
   },
 };
