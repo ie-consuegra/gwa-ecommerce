@@ -14,6 +14,7 @@ const cart = {
   deliveryChosen: '',
   paymentMethods: [],
   paymentMethodDetails: '',
+  hasRegisteredCustomer: false,
 
   // METHODS
 
@@ -309,8 +310,11 @@ ${detailsLine}`;
   },
 
   launchWhatsapp(event) {
+    // Save/Delete customer information according to remember me checkbox
     if (document.getElementById('remember-me').checked) {
       this.registerCustomer();
+    } else {
+      this.deleteCustomer();
     }
     const cartFormData = new FormData(event.target);
     const cartList = this.getItemsInCart();
@@ -329,6 +333,7 @@ ${detailsLine}`;
 
   loadRegisteredCustomer() {
     if (localStorage.getItem('customerInfo')) {
+      this.hasRegisteredCustomer = true;
       const customerInfoJSON = localStorage.getItem('customerInfo');
       const customerInfo = JSON.parse(customerInfoJSON);
 
@@ -352,5 +357,11 @@ ${detailsLine}`;
 
     const customerInfoJSON = JSON.stringify(customerInfo);
     localStorage.setItem('customerInfo', customerInfoJSON);
+  },
+
+  deleteCustomer() {
+    if (localStorage.getItem('customerInfo')) {
+      localStorage.removeItem('customerInfo');
+    }
   },
 };
