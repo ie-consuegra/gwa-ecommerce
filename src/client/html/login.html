@@ -333,10 +333,10 @@
                       <div class="col-12 col-sm-6">
                         <div class="row">
                           <div class="col-12 col-sm-6 d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary"><i class="bi bi-arrow-repeat"></i> Restaurar configuración guardada</button>
+                            <button type="button" class="btn btn-primary" @click="restoreConfig()"><i class="bi bi-arrow-repeat"></i> Restaurar configuración guardada</button>
                           </div>
                           <div class="col-12 col-sm-6 d-flex justify-content-center">
-                            <button type="button" class="btn btn-secondary"><i class="bi bi-cloud-upload"></i> Respaldar configuración (Backup)</button>
+                            <button type="button" class="btn btn-secondary" @click="backupConfig()"><i class="bi bi-cloud-upload"></i> Respaldar configuración (Backup)</button>
                           </div>
                         </div>
                       </div>
@@ -758,6 +758,30 @@
               }
             })
             .recoverPassword(username);
+        },
+
+        restoreConfig(){
+          google.script.run
+            .withSuccessHandler((restoreSuccessful) => {
+              if (restoreSuccessful) {
+                alert('Los datos de configuración han sido restaurados exitosamente, el nombre de usuario y contraseña deben establecerse de nuevo.');
+              } else {
+                alert('Los datos de configuración no pudieron ser restaurados, esto se puede deber a que no se haya hecho un backup previamente');
+              }
+            })
+            .restoreConfig();
+        },
+
+        backupConfig() {
+          google.script.run
+            .withSuccessHandler((backupSuccessful) => {
+              if (backupSuccessful) {
+                alert('Los datos de configuración han sido respaldados exitosamente');
+              } else {
+                alert('Los datos de configuración no pudieron ser respaldados, vuelva a intentarlo en un momento');
+              }
+            })
+            .backupConfig();
         },
       }
     }

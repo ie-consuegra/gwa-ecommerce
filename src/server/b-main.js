@@ -113,3 +113,94 @@ function recoverPassword(username) {
 function deleteProperties() {
   PropertiesService.getScriptProperties().deleteAllProperties();
 }
+
+function createAppFolder() {
+  
+}
+
+// Configuration backup/restore functions
+function restoreConfig() {
+  let restoreSuccess = false;
+  const folders = DriveApp.getFoldersByName('IC_APPS');
+
+  // There must be only one folder in the iterator
+  if (folders.hasNext()) {
+    const appFolder = folders.next();
+    const files = appFolder.getFilesByName('IC_APPS_CONFIG');
+    // There must be only one file
+    if (files.hasNext()) {
+      const appFile = files.next();
+      const appSS = SpreadsheetApp.openById(appFile.getId());
+      const appSheet = appSS.getSheetByName('GWA_ECOMMERCE');
+      const appData = appSheet.getDataRange().getValues();
+      let configDataJSON = '';
+      appData.forEach((row) => {
+        if (row[0] === 'CONFIG') {
+          configDataJSON = row[1];
+        }
+      });
+      Logger.log(configDataJSON);
+      restoreSuccess = true;
+    }
+  }
+  return restoreSuccess;
+}
+
+function backupConfig() {
+  let backupSuccess = false;
+  const scriptProperties = PropertiesService.getScriptProperties().getProperties();
+  // Remove sensible/unnecesary data
+  scriptProperties.currentToken = '';
+  const settings = JSON.parse(scriptProperties.settings);
+  settings['admin-username'] = '';
+  settings['admin-password'] = '';
+  scriptProperties.settings = settings;
+
+  const appConfigJSON = JSON.stringify(scriptProperties);
+
+  const folders = DriveApp.getFoldersByName('IC_APPS');
+
+  // There must be only one folder in the iterator
+  if (folders.hasNext()) {
+    const appFolder = folders.next();
+    const files = appFolder.getFilesByName('IC_APPS_CONFIG');
+    // There must be only one file
+    if (files.hasNext()) {
+      const appFile = files.next();
+      const appSS = SpreadsheetApp.openById(appFile.getId());
+      const appSheet = appSS.getSheetByName('GWA_ECOMMERCE');
+      const appData = appSheet.getDataRange().getValues();
+      let configDataJSON = '';
+      appData.forEach((row) => {
+        if (row[0] === 'CONFIG') {
+          configDataJSON = row[1];
+        }
+      });
+      Logger.log(configDataJSON);
+      restoreSuccess = true;
+    }
+  } else {
+    const appFolder = DriveApp.createFolder('IC_APPS');
+    let appSheet = {}; // Sheet object
+    // Pending: Check if the spreadsheet exists
+    const appSS = SpreadsheetApp.create('IC_APPS_CONFIG');
+    if (appSS.getSheetByName('GWA_ECOMMERCE')) {
+      appSheet = appSS.getSheetByName('GWA_ECOMMERCE');
+    } else {
+      appSheet = appSS.insertSheet('GWA_ECOMMERCE');
+    }
+
+    const values = [['CONFIG', appConfigJSON]];
+    appSheet.getRange(1, 1, 1, 2).setValues(values);
+
+    // Move file to the app folder
+    const ssFiles = DriveApp.getFilesByName('IC_APPS_CONFIG');
+    const ssFile = ssFiles.hasNext() ? ssFiles.next() : null;
+    if (ssFile) {
+      ssFile.moveTo(appFolder);
+    }
+
+    backupSuccess = true;
+  }
+  return backupSuccess;
+}
