@@ -328,14 +328,15 @@
                     </div>
                     <div class="row py-3 bg-light rounded">
                       <div class="col-12 col-sm-6">
-                        <p class="mt-2">Solo para uso antes y después de actualizar la app</p>
+                        <p class="mt-2">Si va a actualizar la app, previamente haga un respaldo de la configuración.</p>
                       </div>
                       <div class="col-12 col-sm-6">
                         <div class="row">
+                          <!-- RESTORE CONFIG BUTTON NOT AVAILABLE FOR THE FIRST RELEASE OF THE APP
                           <div class="col-12 col-sm-6 d-flex justify-content-center">
                             <button type="button" class="btn btn-primary" @click="restoreConfig()"><i class="bi bi-arrow-repeat"></i> Restaurar configuración guardada</button>
-                          </div>
-                          <div class="col-12 col-sm-6 d-flex justify-content-center">
+                          </div> After enabling this block of code, change col-sm-12 to col-sm-6 in the next line -->
+                          <div class="col-12 col-sm-12 d-flex justify-content-center">
                             <button type="button" class="btn btn-secondary" @click="backupConfig()"><i class="bi bi-cloud-upload"></i> Respaldar configuración (Backup)</button>
                           </div>
                         </div>

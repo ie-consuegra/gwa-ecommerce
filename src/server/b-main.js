@@ -90,6 +90,7 @@ function changePassword(formData) {
   return changeSuccessful;
 }
 
+// TO BE USED FROM THE SECOND RELEASE OF THE APP ON
 function recoverPassword(username) {
   let recoverSuccessful = false;
   if (App.isAdmin(username)) {
@@ -114,10 +115,6 @@ function deleteProperties() {
   PropertiesService.getScriptProperties().deleteAllProperties();
 }
 
-function createAppFolder() {
-  
-}
-
 // Configuration backup/restore functions
 function restoreConfig() {
   let restoreSuccess = false;
@@ -136,10 +133,23 @@ function restoreConfig() {
       let configDataJSON = '';
       appData.forEach((row) => {
         if (row[0] === 'CONFIG') {
-          configDataJSON = row[1];
+          [, configDataJSON] = row;
         }
       });
-      Logger.log(configDataJSON);
+      const configData = JSON.parse(configDataJSON);
+      Object.entries(configData).forEach((entry) => {
+        const [key, value] = entry;
+        Logger.log(key, value);
+        let valueStr = '';
+        if (typeof value === 'string') {
+          valueStr = value;
+        } else {
+          valueStr = JSON.stringify(value);
+        }
+        PropertiesService
+          .getScriptProperties()
+          .setProperty(key, valueStr);
+      });
       restoreSuccess = true;
     }
   }
@@ -169,15 +179,11 @@ function backupConfig() {
       const appFile = files.next();
       const appSS = SpreadsheetApp.openById(appFile.getId());
       const appSheet = appSS.getSheetByName('GWA_ECOMMERCE');
-      const appData = appSheet.getDataRange().getValues();
-      let configDataJSON = '';
-      appData.forEach((row) => {
-        if (row[0] === 'CONFIG') {
-          configDataJSON = row[1];
-        }
-      });
-      Logger.log(configDataJSON);
-      restoreSuccess = true;
+
+      const values = [['CONFIG', appConfigJSON]];
+      appSheet.getRange(1, 1, 1, 2).setValues(values);
+
+      backupSuccess = true;
     }
   } else {
     const appFolder = DriveApp.createFolder('IC_APPS');
