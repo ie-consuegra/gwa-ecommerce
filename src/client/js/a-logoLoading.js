@@ -1,0 +1,1 @@
+const logoLoadingImgSrc = 'https://blogger.googleusercontent.com/img/a/AVvXsEgv4NGh6JLU8846llLlriTq0KluSLo8XPB2n1E3AWhoWNU3wIYOnAlAMRDScscAwge4oQPefph9PcnmEwWuAxuvBvYL1uAZO0oWwMI_3rEW7h9nmylKypy2O-73e9vHhWwlK7gG_oKKOgJAfE3Yon75zkAXSdqHZwf7mLFXBOZOy8qhRZqFy5HmWG9r';

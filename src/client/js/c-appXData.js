@@ -2,12 +2,13 @@
 * a-utils.js: formatCurrency
 * b-cart.js
 * b-store.js: isAvailable, isActive
+* a-logoLoading.js: logoLoadingImgSrc variable
 */
 
 function appXData() {
   return {
     // Store stuff
-    logoUrl: 'https://ik.imagekit.io/2kiozwxkybfj/logo_loading_ZRj7KyBo8.gif',
+    logoUrl: logoLoadingImgSrc,
     stock: [],
     formatValue,
     isAvailable,

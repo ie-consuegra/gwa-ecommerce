@@ -53,6 +53,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+#cart-view {
+  display: none;
+}
+
 .cart-image {
   max-height: 96px;
 }
